@@ -1,9 +1,12 @@
-import { TwitchProvider } from './components/TwitchProvider';
+import { TwitchProvider } from "./components/TwitchProvider";
+import { CurrentUserName } from "./components/ui";
 
 function App() {
   return (
     <TwitchProvider>
-      <p>TwitchProvider test</p>
+      <div>
+        <CurrentUserName /> is the current user authenticated.
+      </div>
     </TwitchProvider>
   );
 }
