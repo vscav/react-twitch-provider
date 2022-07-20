@@ -4,9 +4,7 @@ import {
   CurrentUserName,
   FollowersCount,
   LatestFollower,
-  LiveStreamViewersCount,
-  RecentSubscriber,
-  SubscribersCount,
+  Streams
 } from "./components/info";
 
 function App() {
@@ -21,13 +19,7 @@ function App() {
       <div>
         Number of followers: <FollowersCount /> (latest: <LatestFollower />)
       </div>
-      <div>
-        Number of subscribers: <SubscribersCount /> (recent:{" "}
-        <RecentSubscriber />)
-      </div>
-      <div>
-        Number of viewers: <LiveStreamViewersCount />
-      </div>
+      <Streams />
     </TwitchProvider>
   );
 }
