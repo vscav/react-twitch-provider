@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTwitchUser } from '../../hooks'
 
-export function Greeting() {
+function Greeting() {
   const { data, error } = useTwitchUser()
 
   return (
@@ -12,3 +12,5 @@ export function Greeting() {
     </p>
   )
 }
+
+export { Greeting }

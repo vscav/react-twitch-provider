@@ -1,13 +1,13 @@
 import { createContext, useContext } from 'react'
 
-export type TwitchContextData = {
+type TwitchContextData = {
   accessToken: string
   clientId: string
 }
 
-export const TwitchContext = createContext<TwitchContextData | undefined>(undefined)
+const TwitchContext = createContext<TwitchContextData | undefined>(undefined)
 
-export function useTwitchContext() {
+function useTwitchContext() {
   const context = useContext(TwitchContext)
 
   if (context === undefined) {
@@ -16,3 +16,5 @@ export function useTwitchContext() {
 
   return context
 }
+
+export { TwitchContext, useTwitchContext }
