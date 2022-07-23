@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import type { FetcherError } from '../utils/error'
-import { useTwitchApi } from './useTwitchApi'
 import type { TwitchApiDataResponse } from './useTwitchApi'
+import { useTwitchApi } from './useTwitchApi'
 
 const USERS_API_ENDPOINT = 'users'
 
@@ -18,15 +18,20 @@ const User = z.object({
   email: z.string(),
   created_at: z.string(),
 })
-
 type User = z.infer<typeof User>
+
 type Users = User[]
 
 type UsersApiResponse = TwitchApiDataResponse<Users>
 
-type TwitchUserHookReturn = {
-  data: User | undefined
+// To move away i a more global place of the code base
+type TwitchHooksBaseReturn = {
   error: FetcherError | undefined
+  loading: boolean
+}
+
+type TwitchUserHookReturn = TwitchHooksBaseReturn & {
+  data: User | undefined
 }
 
 /**
@@ -40,9 +45,9 @@ type TwitchUserHookReturn = {
  *
  */
 function useTwitchUser(): TwitchUserHookReturn {
-  const { data, error } = useTwitchApi<UsersApiResponse>(USERS_API_ENDPOINT)
+  const { data, error, isValidating } = useTwitchApi<UsersApiResponse>(USERS_API_ENDPOINT)
 
-  return { data: data?.data[0], error }
+  return { data: data?.data[0], error, loading: isValidating }
 }
 
 export { useTwitchUser }

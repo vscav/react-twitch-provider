@@ -45,10 +45,7 @@ async function generateApiFetcherError(fetcherResponse: Response) {
 
 async function twitchApiFetcher<FetcherResponse>(url: string, headers: HeadersInit): Promise<FetcherResponse> {
   const response = await fetch(url, { ...requestInit, headers })
-
-  if (!response.ok) {
-    throw await generateApiFetcherError(response)
-  }
+  if (!response.ok) throw await generateApiFetcherError(response)
 
   return response.json()
 }
