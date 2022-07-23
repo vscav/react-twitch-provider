@@ -8,9 +8,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint src",
-    "lint:fix": "yarn lint -- --fix",
+    "lint:fix": "yarn lint --fix",
     "prettier": "prettier src --check",
-    "prettier:fix": "yarn run prettier -- --write",
+    "prettier:fix": "yarn run prettier --write",
     "format": "yarn prettier:fix && yarn lint:fix"
   },
   "eslintConfig": {
