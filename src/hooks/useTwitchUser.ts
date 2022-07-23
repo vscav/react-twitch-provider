@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import type { FetcherError } from '../utils/error'
+import { FetcherError } from '../utils/error'
 import type { TwitchApiDataResponse } from './useTwitchApi'
 import { useTwitchApi } from './useTwitchApi'
 
@@ -18,36 +18,63 @@ const User = z.object({
   email: z.string(),
   created_at: z.string(),
 })
+
 type User = z.infer<typeof User>
 
 type Users = User[]
 
 type UsersApiResponse = TwitchApiDataResponse<Users>
 
-// To move away i a more global place of the code base
+// To move away in a more global place of the code base
 type TwitchHooksBaseReturn = {
-  error: FetcherError | undefined
+  error?: FetcherError
   loading: boolean
 }
 
 type TwitchUserHookReturn = TwitchHooksBaseReturn & {
-  data: User | undefined
+  data?: User
+}
+
+function safelyValidateUserData(maybeUserData: unknown) {
+  const { success: isUserDataValid } = User.safeParse(maybeUserData)
+  return isUserDataValid
 }
 
 /**
  * Retrieve the logged in user data from the Twitch API.
- * The response received from the hook can result in an error or the expected user data.
+ * The response received can result in an error or the expected user data.
  * While the promise is not yet resolved, the hook will return a loading state set to `true`.
  *
  * The response is cached by default for 10 seconds.
  *
- * Twitch documentation: https://dev.twitch.tv/docs/api/reference#get-users
- *
+ * See the [Twitch API endpoint documentation](https://dev.twitch.tv/docs/api/reference#get-users) for more information.
  */
 function useTwitchUser(): TwitchUserHookReturn {
   const { data, error, isValidating } = useTwitchApi<UsersApiResponse>(USERS_API_ENDPOINT)
 
-  return { data: data?.data[0], error, loading: isValidating }
+  const loadingState = { loading: isValidating }
+
+  const userData = data?.data[0]
+
+  const isUserDataValid = safelyValidateUserData(userData)
+  const needsDataValidation = !isValidating && !error
+
+  const hasValidationError = needsDataValidation && !isUserDataValid
+
+  if (hasValidationError) {
+    // Use another type of error (other than the FetcherError) to be able to be more specific
+    const validationError = new FetcherError(
+      'Failed data validation',
+      422,
+      'The response received from the Twitch API does not respect the expected format for a user object. It might has been caused by breaking changes in the Twitch API that are not currently handled in the library.',
+    )
+    return {
+      ...loadingState,
+      error: validationError,
+    }
+  }
+
+  return { ...loadingState, data: userData, error }
 }
 
 export { useTwitchUser }

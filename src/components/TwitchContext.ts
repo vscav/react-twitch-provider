@@ -11,6 +11,7 @@ function useTwitchContext() {
   const context = useContext(TwitchContext)
 
   if (context === undefined) {
+    // Adapt the error message to be more "user focused"
     throw new Error('useTwitchContext must be used within a TwitchProvider')
   }
 

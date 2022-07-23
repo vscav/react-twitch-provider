@@ -13,6 +13,7 @@ const TwitchApiError = z.object({
   message: z.string(),
   status: z.number(),
 })
+
 type TwitchApiError = z.infer<typeof TwitchApiError>
 
 type CustomRequestInit = Pick<RequestInit, 'method' | 'mode' | 'cache'>
