@@ -52,16 +52,15 @@ function safelyValidateUserData(maybeUserData: unknown) {
 function useTwitchUser(): TwitchUserHookReturn {
   const { data, error, isValidating } = useTwitchApi<UsersApiResponse>(USERS_API_ENDPOINT)
 
+  const needsDataValidation = !isValidating && !error
+
   const loadingState = { loading: isValidating }
 
   const userData = data?.data[0]
 
   const isUserDataValid = safelyValidateUserData(userData)
-  const needsDataValidation = !isValidating && !error
 
-  const hasValidationError = needsDataValidation && !isUserDataValid
-
-  if (hasValidationError) {
+  if (needsDataValidation && !isUserDataValid) {
     // Use another type of error (other than the FetcherError) to be able to be more specific
     const validationError = new FetcherError(
       'Failed data validation',
