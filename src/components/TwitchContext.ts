@@ -18,4 +18,6 @@ function useTwitchContext() {
   return context
 }
 
+// We expose only one way to provide the context value and only one way to consume it.
+// This allows to ensure that the context value will be used the way it should be.
 export { TwitchContext, useTwitchContext }

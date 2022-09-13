@@ -61,7 +61,6 @@ function useTwitchUser(): TwitchUserHookReturn {
   const isUserDataValid = safelyValidateUserData(userData)
 
   if (needsDataValidation && !isUserDataValid) {
-    // Use another type of error (other than the FetcherError) to be able to be more specific
     const validationError = new FetcherError(
       'Failed data validation',
       422,

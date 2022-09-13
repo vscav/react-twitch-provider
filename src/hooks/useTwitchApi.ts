@@ -41,10 +41,26 @@ async function generateApiFetcherError(fetcherResponse: Response) {
     ? (parsedResponse as TwitchApiError).message
     : genericErrorInformation?.message || "Couldn't obtain more details about the error"
 
+  console.log('error: ', parsedResponse)
+
   return new FetcherError(name, status, message)
 }
 
 async function twitchApiFetcher<FetcherResponse>(url: string, headers: HeadersInit): Promise<FetcherResponse> {
+  // const mockedClient = await getFirstMockedClient()
+  // const mockedUserToAuthenticate = await getMockedUserToAuthenticate()
+  // const mockedAccessToken = await getMockedAccessToken(mockedClient, mockedUserToAuthenticate)
+
+  // const headers = {
+  //   'client-id': mockedClient.id,
+  //   Authorization: `Bearer ${mockedAccessToken}`,
+  // }
+  // const response = await fetch('/mock/users', { headers })
+
+  // if (!response.ok) throw await generateApiFetcherError(response)
+
+  // return response.json()
+
   const response = await fetch(url, { ...requestInit, headers })
   if (!response.ok) throw await generateApiFetcherError(response)
 
