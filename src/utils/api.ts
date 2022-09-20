@@ -13,21 +13,24 @@ const getFirstMockedClient = async () => {
   return { id: client.ID, secret: client.Secret }
 }
 
-// const getMockedAccessToken = async (mockedClient, mockedUserToAuthenticate) => {
-//   const authorizationParameters = new URLSearchParams({
-//     client_id: mockedClient.id,
-//     client_secret: mockedClient.secret,
-//     grant_type: 'user_token',
-//     user_id: mockedUserToAuthenticate.id,
-//     scope: ['user:read:email'].join(' '),
-//   })
+const getMockedAccessToken = async (mockedClient: any) => {
+  const mockedUserToAuthenticate = await getMockedUserToAuthenticate()
 
-//   const authorizationResponse = await fetch(`/auth/authorize?${authorizationParameters}`, {
-//     method: 'POST',
-//   })
-//   const { access_token: mockedAccessToken } = await authorizationResponse.json()
-//   return mockedAccessToken
-// }
+  const authorizationParameters = new URLSearchParams({
+    client_id: mockedClient.id,
+    client_secret: mockedClient.secret,
+    grant_type: 'user_token',
+    user_id: mockedUserToAuthenticate.id,
+    scope: ['user:read:email'].join(' '),
+  })
+
+  const authorizationResponse = await fetch(`/auth/authorize?${authorizationParameters}`, {
+    method: 'POST',
+  })
+  const { access_token: mockedAccessToken } = await authorizationResponse.json()
+
+  return mockedAccessToken
+}
 
 const getMockedUserToAuthenticate = async () => {
   const users = await fetch('/units/users')
@@ -48,4 +51,4 @@ const redirectForToken = (clientId: string) => {
   window.location.replace(oauthUrl)
 }
 
-export { getFirstMockedClient, getMockedUserToAuthenticate, redirectForToken }
+export { getFirstMockedClient, getMockedAccessToken, getMockedUserToAuthenticate, redirectForToken }

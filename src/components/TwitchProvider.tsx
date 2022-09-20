@@ -1,11 +1,20 @@
-import React from 'react'
-import { redirectForToken } from '../utils/api'
+import React, { useEffect, useState } from 'react'
+import { __test__ } from '../constants'
+import { getMockedAccessToken, redirectForToken } from '../utils/api'
 import { TwitchContext } from './TwitchContext'
 
 type TwitchProviderProps = {
   clientId: string
   clientSecret?: string
   children?: React.ReactNode
+}
+
+function storeAccessTokenInSession(token: string) {
+  sessionStorage.setItem('twitchAccessToken', token)
+}
+
+function getAccessTokenFromSession() {
+  return sessionStorage.getItem('twitchAccessToken')
 }
 
 function throwOnInvalidClient(clientId: string) {
@@ -17,21 +26,43 @@ function throwOnInvalidClient(clientId: string) {
     )
 }
 
-function TwitchProvider({ clientId, children }: TwitchProviderProps) {
+function TwitchProvider({ clientId, clientSecret, children }: TwitchProviderProps) {
   throwOnInvalidClient(clientId)
 
-  const hashParameters = new URLSearchParams(document.location.hash.substring(1))
-  const accessToken = hashParameters.get('access_token')
+  const [accessToken, setAccessToken] = useState<string | null>(__test__ ? null : getAccessTokenFromSession())
+
+  useEffect(() => {
+    __test__ ? handleMockedToken() : handleTokenFromQueryParams()
+  }, [clientId, clientSecret])
+
+  function handleTokenFromQueryParams() {
+    const hashParameters = new URLSearchParams(document.location.hash.substring(1))
+    const accessTokenAsQueryParameter = hashParameters.get('access_token')
+
+    if (accessTokenAsQueryParameter) {
+      storeAccessTokenInSession(accessTokenAsQueryParameter)
+      setAccessToken(accessTokenAsQueryParameter)
+    }
+  }
+
+  async function handleMockedToken() {
+    const mockedAccessToken = await getMockedAccessToken({
+      id: clientId,
+      secret: clientSecret,
+    })
+
+    if (mockedAccessToken) setAccessToken(mockedAccessToken)
+  }
 
   if (!accessToken) {
-    redirectForToken(clientId)
+    !__test__ && redirectForToken(clientId)
     return null
   }
 
   return (
     <TwitchContext.Provider
       value={{
-        accessToken,
+        accessToken: accessToken || '',
         clientId,
       }}
     >
