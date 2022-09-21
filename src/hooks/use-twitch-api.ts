@@ -74,3 +74,4 @@ function useTwitchApi<EntityDataType>(path: string): TwitchHookFetcherReturn<Ent
 
 export type { TwitchApiDataResponse }
 export { useTwitchApi }
+

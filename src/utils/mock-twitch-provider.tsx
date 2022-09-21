@@ -1,15 +1,19 @@
-import React, { ReactNode, useEffect, useState } from 'react'
+import type { ReactNode } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TwitchContext } from '../context/twitch-context'
 import { getMockedAccessToken } from './api'
 
-type TwitchProviderProps = {
+type MockTwitchProviderOptions = {
   clientId: string
-  clientSecret?: string
+  clientSecret: string
+}
+
+type MockTwitchProviderProps = MockTwitchProviderOptions & {
   children?: ReactNode
 }
 
-function throwOnInvalidClient(clientId: string) {
-  const isClientIdValid = clientId || typeof clientId === 'string' || clientId['length']
+function throwOnInvalidClientIdentifier(clientId: string) {
+  const isClientIdValid = clientId && typeof clientId === 'string' && clientId['length']
 
   if (!isClientIdValid)
     throw new Error(
@@ -17,8 +21,8 @@ function throwOnInvalidClient(clientId: string) {
     )
 }
 
-function MockTwitchProvider({ clientId, clientSecret, children }: TwitchProviderProps) {
-  throwOnInvalidClient(clientId)
+function MockTwitchProvider({ clientId, clientSecret, children }: MockTwitchProviderProps) {
+  throwOnInvalidClientIdentifier(clientId)
 
   const [accessToken, setAccessToken] = useState<string | null>(null)
 
@@ -49,4 +53,6 @@ function MockTwitchProvider({ clientId, clientSecret, children }: TwitchProvider
   )
 }
 
+export type { MockTwitchProviderOptions }
 export { MockTwitchProvider }
+

@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react-hooks'
 import { useTwitchContext } from '../context/twitch-context'
 import { enableErrorOutputSuppression } from '../utils/console'
 import { getErrorMessage } from '../utils/error'
-import { renderHookWithTwitchContext } from '../utils/render-twitch-hook'
+import { renderHookWithMockTwitchContext } from '../utils/render-with-twitch'
 
 enableErrorOutputSuppression()
 
@@ -16,19 +16,19 @@ describe('useTwitchContext', () => {
   })
 
   it('should expose the context data', async () => {
-    const { result } = await renderHookWithTwitchContext(() => useTwitchContext())
+    const { result } = await renderHookWithMockTwitchContext(() => useTwitchContext())
     expect(result.current.accessToken).toBeDefined()
     expect(result.current.clientId).toBeDefined()
   })
 
   it('should expose the access token as a string', async () => {
-    const { result } = await renderHookWithTwitchContext(() => useTwitchContext())
+    const { result } = await renderHookWithMockTwitchContext(() => useTwitchContext())
     expect(typeof result.current.accessToken).toBe('string')
     expect(result.current.accessToken.length).toBeGreaterThan(0)
   })
 
   it('should expose the client id as a string', async () => {
-    const { result } = await renderHookWithTwitchContext(() => useTwitchContext())
+    const { result } = await renderHookWithMockTwitchContext(() => useTwitchContext())
     expect(typeof result.current.clientId).toBe('string')
     expect(result.current.accessToken.length).toBeGreaterThan(0)
   })

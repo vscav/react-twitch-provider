@@ -1,5 +1,5 @@
-const consoleFilters = [
-  /^Warning: ReactDOM.render is no longer supported in React 18./ // React 18 deprecation warning
+const CONSOLE_FILTERS = [
+  /^Warning: ReactDOM.render is no longer supported in React 18./, // React 18 deprecation warning
 ]
 
 function suppressErrorOutput() {
@@ -7,7 +7,7 @@ function suppressErrorOutput() {
 
   const error = (...args: Parameters<typeof originalError>) => {
     const message = typeof args[0] === 'string' ? args[0] : null
-    if (!message || !consoleFilters.some((filter) => filter.test(message))) {
+    if (!message || !CONSOLE_FILTERS.some((filter) => filter.test(message))) {
       originalError(...args)
     }
   }

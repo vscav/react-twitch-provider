@@ -27,6 +27,7 @@ const getMockedAccessToken = async (mockedClient: any) => {
   const authorizationResponse = await fetch(`/auth/authorize?${authorizationParameters}`, {
     method: 'POST',
   })
+
   const { access_token: mockedAccessToken } = await authorizationResponse.json()
 
   return mockedAccessToken

@@ -4,13 +4,16 @@ import { TwitchContext } from './twitch-context'
 
 const TOKEN_PARAM_IDENTIFIER = 'access_token'
 
-type TwitchProviderProps = {
+type TwitchProviderOptions = {
   clientId: string
+}
+
+type TwitchProviderProps = TwitchProviderOptions & {
   children?: ReactNode
 }
 
-function throwOnInvalidClient(clientId: string) {
-  const isClientIdValid = clientId || typeof clientId === 'string' || clientId['length']
+function throwOnInvalidClientIdentifier(clientId: string) {
+  const isClientIdValid = clientId && typeof clientId === 'string' && clientId['length']
 
   if (!isClientIdValid)
     throw new Error(
@@ -19,7 +22,7 @@ function throwOnInvalidClient(clientId: string) {
 }
 
 function TwitchProvider({ clientId, children }: TwitchProviderProps) {
-  throwOnInvalidClient(clientId)
+  throwOnInvalidClientIdentifier(clientId)
 
   const hashParameters = new URLSearchParams(document.location.hash.substring(1))
   const accessToken = hashParameters.get(TOKEN_PARAM_IDENTIFIER)
@@ -41,4 +44,5 @@ function TwitchProvider({ clientId, children }: TwitchProviderProps) {
   )
 }
 
+export type { TwitchProviderOptions }
 export { TwitchProvider }
