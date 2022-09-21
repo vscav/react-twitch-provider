@@ -31,21 +31,24 @@ function safelyValidateTwitchApiError(maybeTwitchApiError: unknown) {
 }
 
 async function generateApiFetcherError(fetcherResponse: Response) {
-  const parsedResponse = await fetcherResponse.json()
-
-  const isTwitchApiError = safelyValidateTwitchApiError(parsedResponse)
-
   const genericErrorInformation = HTTP_STATUS_MAP.get(fetcherResponse.status)
 
   const name = genericErrorInformation?.name || 'Unknown error'
   const status = fetcherResponse.status
-  const message = isTwitchApiError
-    ? (parsedResponse as TwitchApiError).message
-    : genericErrorInformation?.message || "Couldn't obtain more details about the error"
 
-  console.log('error: ', parsedResponse)
+  let message = genericErrorInformation?.message || "Couldn't obtain more details about the error"
 
-  return new FetcherError(name, status, message)
+  try {
+    // Try to parse the response because it may be a specific Twitch API error
+    // with a more relevant message
+    const parsedResponse = await fetcherResponse.json()
+    const isTwitchApiError = safelyValidateTwitchApiError(parsedResponse)
+
+    if (isTwitchApiError && parsedResponse.message.length) message = parsedResponse.message
+  } finally {
+    /* eslint-disable-next-line no-unsafe-finally */
+    return new FetcherError(name, status, message)
+  }
 }
 
 async function twitchApiFetcher<FetcherResponse>(url: string, headers: HeadersInit): Promise<FetcherResponse> {
@@ -71,4 +74,3 @@ function useTwitchApi<EntityDataType>(path: string): TwitchHookFetcherReturn<Ent
 
 export type { TwitchApiDataResponse }
 export { useTwitchApi }
-

@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { FetcherError } from '../utils/error'
+import { FetcherError, UnexpectedTwitchDataError } from '../utils/error'
 import type { TwitchApiDataResponse } from './use-twitch-api'
 import { useTwitchApi } from './use-twitch-api'
 
@@ -61,11 +61,7 @@ function useTwitchUser(): TwitchUserHookReturn {
   const isUserDataValid = safelyValidateUserData(userData)
 
   if (needsDataValidation && !isUserDataValid) {
-    const validationError = new FetcherError(
-      'Failed data validation',
-      422,
-      'The response received from the Twitch API does not respect the expected format for a user object. It might has been caused by breaking changes in the Twitch API that are not currently handled in the library.',
-    )
+    const validationError = new UnexpectedTwitchDataError()
     return {
       ...loadingState,
       error: validationError,

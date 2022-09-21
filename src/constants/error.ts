@@ -141,4 +141,4 @@ const HTTP_STATUS_MAP = new Map<number, { name: string; message: string }>()
     message: 'The client needs to auth',
   })
 
-  export { HTTP_STATUS_MAP };
+export { HTTP_STATUS_MAP }

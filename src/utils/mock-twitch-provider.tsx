@@ -22,16 +22,16 @@ function MockTwitchProvider({ clientId, clientSecret, children }: TwitchProvider
 
   const [accessToken, setAccessToken] = useState<string | null>(null)
 
-  async function handleMockedToken() {
-    const mockedAccessToken = await getMockedAccessToken({
-      id: clientId,
-      secret: clientSecret,
-    })
-
-    if (mockedAccessToken) setAccessToken(mockedAccessToken)
-  }
-
   useEffect(() => {
+    async function handleMockedToken() {
+      const mockedAccessToken = await getMockedAccessToken({
+        id: clientId,
+        secret: clientSecret,
+      })
+
+      if (mockedAccessToken) setAccessToken(mockedAccessToken)
+    }
+
     handleMockedToken()
   }, [clientId, clientSecret])
 
