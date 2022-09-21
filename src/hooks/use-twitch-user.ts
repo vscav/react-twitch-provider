@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { FetcherError } from '../utils/error'
-import type { TwitchApiDataResponse } from './useTwitchApi'
-import { useTwitchApi } from './useTwitchApi'
+import type { TwitchApiDataResponse } from './use-twitch-api'
+import { useTwitchApi } from './use-twitch-api'
 
 const USERS_API_ENDPOINT = 'users'
 
@@ -43,7 +43,7 @@ function safelyValidateUserData(maybeUserData: unknown) {
 /**
  * Retrieve the logged in user data from the Twitch API.
  * The response received can result in an error or the expected user data.
- * While the promise is not yet resolved, the hook will return a loading state set to `true`.
+ * While the promise is not yet resolved, the hook will return a loading state.
  *
  * The response is cached by default for 10 seconds.
  *

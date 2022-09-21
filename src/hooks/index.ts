@@ -1,1 +1,2 @@
-export * from './useTwitchUser'
+export * from './use-twitch-user';
+

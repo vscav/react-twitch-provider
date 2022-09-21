@@ -4,7 +4,7 @@ const baseParameters = {
   scope: ['user:read:email'].join(' '),
 }
 
-const getFirstMockedClient = async () => {
+const getMockedClient = async () => {
   const clients = await fetch('/units/clients')
   const {
     data: [client],
@@ -51,4 +51,4 @@ const redirectForToken = (clientId: string) => {
   window.location.replace(oauthUrl)
 }
 
-export { getFirstMockedClient, getMockedAccessToken, getMockedUserToAuthenticate, redirectForToken }
+export { getMockedAccessToken, getMockedClient, getMockedUserToAuthenticate, redirectForToken }

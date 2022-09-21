@@ -1,0 +1,5 @@
+const TWITCH_API_ENDPOINT = 'https://api.twitch.tv/helix/'
+const TWITCH_MOCK_API_ENDPOINT = '/mock/'
+const TWITCH_CLIENT_ID = process.env.REACT_APP_TWITCH_CLIENT_ID || ''
+
+export { TWITCH_API_ENDPOINT, TWITCH_MOCK_API_ENDPOINT, TWITCH_CLIENT_ID }

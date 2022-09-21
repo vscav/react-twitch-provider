@@ -1,9 +1,11 @@
 import type { Fetcher, SWRResponse } from 'swr'
 import useSWR from 'swr'
 import { z } from 'zod'
-import { useTwitchContext } from '../components/TwitchContext'
-import { TWITCH_API_ENDPOINT, TWITCH_MOCK_API_ENDPOINT, __test__ } from '../constants'
-import { FetcherError, httpStatusMap } from '../utils/error'
+import { __test__ } from '../constants/env'
+import { HTTP_STATUS_MAP } from '../constants/error'
+import { TWITCH_API_ENDPOINT, TWITCH_MOCK_API_ENDPOINT } from '../constants/twitch-api'
+import { useTwitchContext } from '../context/twitch-context'
+import { FetcherError } from '../utils/error'
 
 type TwitchApiDataResponse<EntityType> = { data: EntityType }
 type TwitchHookFetcherReturn<EntityDataType> = SWRResponse<EntityDataType, FetcherError>
@@ -33,7 +35,7 @@ async function generateApiFetcherError(fetcherResponse: Response) {
 
   const isTwitchApiError = safelyValidateTwitchApiError(parsedResponse)
 
-  const genericErrorInformation = httpStatusMap.get(fetcherResponse.status)
+  const genericErrorInformation = HTTP_STATUS_MAP.get(fetcherResponse.status)
 
   const name = genericErrorInformation?.name || 'Unknown error'
   const status = fetcherResponse.status
@@ -69,3 +71,4 @@ function useTwitchApi<EntityDataType>(path: string): TwitchHookFetcherReturn<Ent
 
 export type { TwitchApiDataResponse }
 export { useTwitchApi }
+
