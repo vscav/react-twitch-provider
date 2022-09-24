@@ -5,7 +5,7 @@ type TwitchClient = {
   secret: string
 }
 
-const getMockedClient = async () => {
+async function getMockedClient() {
   const clients = await fetch('/units/clients')
   const {
     data: [client],
@@ -14,7 +14,7 @@ const getMockedClient = async () => {
   return { id: client.ID, secret: client.Secret }
 }
 
-const getMockedAccessToken = async (mockedClient: TwitchClient) => {
+async function getMockedAccessToken(mockedClient: TwitchClient) {
   const mockedUserToAuthenticate = await getMockedUserToAuthenticate()
 
   const authorizationParameters = new URLSearchParams({
@@ -36,7 +36,7 @@ const getMockedAccessToken = async (mockedClient: TwitchClient) => {
   return mockedAccessToken
 }
 
-const getMockedUserToAuthenticate = async () => {
+async function getMockedUserToAuthenticate() {
   const users = await fetch('/units/users')
   const {
     data: [userToAuthenticate],
@@ -45,5 +45,4 @@ const getMockedUserToAuthenticate = async () => {
   return userToAuthenticate
 }
 
-export type { TwitchClient }
 export { getMockedAccessToken, getMockedClient, getMockedUserToAuthenticate }
