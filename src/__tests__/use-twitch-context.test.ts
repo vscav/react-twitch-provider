@@ -8,11 +8,8 @@ enableErrorOutputSuppression()
 
 describe('useTwitchContext', () => {
   it('should throw if used outside a Twitch provider', () => {
-    try {
-      renderHook(() => useTwitchContext())
-    } catch (error) {
-      expect(getErrorMessage(error)).toBe('useTwitchContext must be used within a TwitchProvider')
-    }
+    const { result } = renderHook(() => useTwitchContext())
+    expect(getErrorMessage(result.error)).toBe('useTwitchContext must be used within a TwitchProvider')
   })
 
   it('should expose the context data', async () => {
