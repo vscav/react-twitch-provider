@@ -57,7 +57,7 @@ const HTTP_STATUS_MAP = new Map<number, { name: string; message: string }>()
   })
   .set(404, {
     name: 'Not Found',
-    message: 'The requested page could not be found but may be available again in the future',
+    message: 'The requested resource could not be found',
   })
   .set(405, {
     name: 'Method Not Allowed',
@@ -141,5 +141,4 @@ const HTTP_STATUS_MAP = new Map<number, { name: string; message: string }>()
     message: 'The client needs to auth',
   })
 
-export { HTTP_STATUS_MAP };
-
+export { HTTP_STATUS_MAP }

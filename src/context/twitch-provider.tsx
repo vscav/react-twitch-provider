@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
 import { redirectForToken } from '../utils/api'
 import { TwitchContext } from './twitch-context'
 
@@ -9,7 +9,7 @@ type TwitchProviderOptions = {
 }
 
 type TwitchProviderProps = TwitchProviderOptions & {
-  children?: ReactNode
+  children?: React.ReactNode
 }
 
 function throwOnInvalidClientIdentifier(clientId: string) {

@@ -1,15 +1,15 @@
-import type { ReactNode } from 'react'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { TwitchContext } from '../context/twitch-context'
-import { getMockedAccessToken } from './api'
+import { getMockedAccessToken } from './mock-api'
 
 type MockTwitchProviderOptions = {
   clientId: string
   clientSecret: string
+  token?: string
 }
 
 type MockTwitchProviderProps = MockTwitchProviderOptions & {
-  children?: ReactNode
+  children?: React.ReactNode
 }
 
 function throwOnInvalidClientIdentifier(clientId: string) {
@@ -21,23 +21,23 @@ function throwOnInvalidClientIdentifier(clientId: string) {
     )
 }
 
-function MockTwitchProvider({ clientId, clientSecret, children }: MockTwitchProviderProps) {
+function MockTwitchProvider({ clientId, clientSecret, token, children }: MockTwitchProviderProps) {
   throwOnInvalidClientIdentifier(clientId)
 
-  const [accessToken, setAccessToken] = useState<string | null>(null)
+  const [accessToken, setAccessToken] = React.useState<string | null>(null)
 
-  useEffect(() => {
-    async function handleMockedToken() {
-      const mockedAccessToken = await getMockedAccessToken({
-        id: clientId,
-        secret: clientSecret,
-      })
+  const handleMockedToken = React.useCallback(async () => {
+    const mockedAccessToken = await getMockedAccessToken({
+      id: clientId,
+      secret: clientSecret,
+    })
 
-      if (mockedAccessToken) setAccessToken(mockedAccessToken)
-    }
+    setAccessToken(token ? token : mockedAccessToken)
+  }, [clientId, clientSecret, token])
 
+  React.useEffect(() => {
     handleMockedToken()
-  }, [clientId, clientSecret])
+  }, [handleMockedToken])
 
   if (!accessToken) return null
 
@@ -55,4 +55,3 @@ function MockTwitchProvider({ clientId, clientSecret, children }: MockTwitchProv
 
 export type { MockTwitchProviderOptions }
 export { MockTwitchProvider }
-

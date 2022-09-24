@@ -1,14 +1,14 @@
-import { createContext, useContext } from 'react'
+import React from 'react'
 
 type TwitchContextData = {
   accessToken: string
   clientId: string
 }
 
-const TwitchContext = createContext<TwitchContextData | undefined>(undefined)
+const TwitchContext = React.createContext<TwitchContextData | undefined>(undefined)
 
 function useTwitchContext() {
-  const context = useContext(TwitchContext)
+  const context = React.useContext(TwitchContext)
 
   if (context === undefined) {
     // Adapt the error message to be more "user focused"

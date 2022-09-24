@@ -15,11 +15,6 @@ describe('useTwitchApi', () => {
     }
   })
 
-  it('should be in validation state while waiting for the resource to resolve', async () => {
-    const { result } = await renderHookWithMockTwitchContext(() => useTwitchApi('foo'))
-    expect(result.current.isValidating).toBeTruthy()
-  })
-
   it('should return a 404 error if the endpoint does not exist', async () => {
     const { result, waitForNextUpdate } = await renderHookWithMockTwitchContext(() => useTwitchApi('foo'))
 
@@ -32,13 +27,30 @@ describe('useTwitchApi', () => {
 
     expect(result.current.error?.status).toBe(404)
     expect(result.current.error?.name).toBe('Not Found')
-    expect(result.current.error?.message).toBe(
-      'The requested page could not be found but may be available again in the future',
-    )
+    expect(result.current.error?.message).toBe('The requested resource could not be found')
   })
 
-  // TODO: Add the following test cases:
-  // it('should return a 400 error on a missing or invalid Twitch client identifier')
-  // it('should return a 401 error on a missing or invalid access token but with an existing Twitch client identifier')
-  // it('should return a 401 error on a missing or invalid Twitch client identifier but with an existing access token')
+  it('should return a 401 error on an invalid OAuth token', async () => {
+    const { result, waitForNextUpdate } = await renderHookWithMockTwitchContext(() => useTwitchApi('users'), {
+      token: 'foo',
+    })
+
+    expect(result.current.isValidating).toBeTruthy()
+
+    await waitForNextUpdate()
+
+    expect(result.current.isValidating).toBeFalsy()
+
+    expect(result.current.error?.status).toBe(401)
+    expect(result.current.error?.name).toBe('Unauthorized')
+    expect(result.current.error?.message).toBe('Invalid OAuth token')
+  })
+
+  it('should return a 400 error on an invalid Twitch client identifier', async () => {
+    try {
+      renderHookWithMockTwitchContext(() => useTwitchApi('foo'), { clientId: 'bar' })
+    } catch (error) {
+      expect(getErrorMessage(error)).toBe('Client ID/Secret invalid')
+    }
+  })
 })
