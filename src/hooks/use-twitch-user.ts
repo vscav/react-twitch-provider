@@ -52,8 +52,6 @@ function safelyValidateUserData(maybeUserData: unknown) {
 function useTwitchUser(): TwitchUserHookReturn {
   const { data, error, isValidating } = useTwitchApi<UsersApiResponse>(USERS_API_ENDPOINT)
 
-  console.log('coucou')
-
   const needsDataValidation = data && !isValidating && !error
 
   const loadingState = { loading: isValidating }
