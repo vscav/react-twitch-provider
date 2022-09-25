@@ -14,7 +14,7 @@ describe('useTwitchApi', () => {
     )
   })
 
-  it('should return a 404 error if the endpoint does not exist', async () => {
+  it('should return a 404 error if the endpoint does not exist in the Twitch API', async () => {
     const { result, waitForNextUpdate } = await renderHookWithMockTwitchContext(() => useTwitchApi('foo'))
 
     expect(result.current.isValidating).toBeTruthy()
@@ -29,7 +29,7 @@ describe('useTwitchApi', () => {
     expect(result.current.error?.message).toBe('The requested resource could not be found')
   })
 
-  it('should return a 401 error on an invalid OAuth token', async () => {
+  it('should return a 401 error on an invalid Twitch OAuth token', async () => {
     const { result, waitForNextUpdate } = await renderHookWithMockTwitchContext(() => useTwitchApi('users'), {
       token: 'foo',
     })
