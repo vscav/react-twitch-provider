@@ -2,7 +2,7 @@ import type { Fetcher, SWRResponse } from 'swr'
 import useSWR from 'swr'
 import { __test__ } from '../constants/env'
 import { TWITCH_API_ENDPOINT, TWITCH_MOCK_API_ENDPOINT } from '../constants/twitch-api'
-import { useTwitchContext } from '../context/twitch-context'
+import { useTwitchContext } from '../context/use-twitch-context'
 import { FetcherError, generateError } from '../utils/error'
 
 type TwitchApiDataResponse<EntityType> = { data: EntityType }

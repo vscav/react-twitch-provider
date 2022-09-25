@@ -1,5 +1,6 @@
 import React from 'react'
 import { redirectForToken } from '../utils/api'
+import { throwOnInvalidClientIdentifier } from '../utils/error'
 import { TwitchContext } from './twitch-context'
 
 const TOKEN_PARAM_IDENTIFIER = 'access_token'
@@ -10,15 +11,6 @@ type TwitchProviderOptions = {
 
 type TwitchProviderProps = TwitchProviderOptions & {
   children?: React.ReactNode
-}
-
-function throwOnInvalidClientIdentifier(clientId: string) {
-  const isClientIdValid = clientId && typeof clientId === 'string' && clientId['length']
-
-  if (!isClientIdValid)
-    throw new Error(
-      'You need to provide an existing and valid Twitch client identifier to the provider. See https://dev.twitch.tv/docs/api/get-started#register-an-application for more information on how to register an application and obtain your Twitch client identifier.',
-    )
 }
 
 function TwitchProvider({ clientId, children }: TwitchProviderProps) {

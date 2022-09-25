@@ -10,7 +10,9 @@ enableErrorOutputSuppression()
 describe('useTwitchApi', () => {
   it('should throw if used outside a Twitch provider', () => {
     const { result } = renderHook(() => useTwitchApi(''))
-    expect(getErrorMessage(result.error)).toBe('useTwitchContext must be used within a TwitchProvider')
+    expect(getErrorMessage(result.error)).toBe(
+      'The TwitchProvider context is undefined. Verify that useTwitchContext() is being called as a child of a <TwitchProvider> component.',
+    )
   })
 
   it('should return a 401 error on an invalid OAuth token', async () => {

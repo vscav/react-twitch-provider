@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks'
-import { useTwitchContext } from '../context/twitch-context'
+import { useTwitchContext } from '../context/use-twitch-context'
 import { enableErrorOutputSuppression } from '../utils/console'
 import { getErrorMessage } from '../utils/error'
 import { renderHookWithMockTwitchContext } from '../utils/render-with-twitch'
@@ -9,7 +9,9 @@ enableErrorOutputSuppression()
 describe('useTwitchContext', () => {
   it('should throw if used outside a Twitch provider', () => {
     const { result } = renderHook(() => useTwitchContext())
-    expect(getErrorMessage(result.error)).toBe('useTwitchContext must be used within a TwitchProvider')
+    expect(getErrorMessage(result.error)).toBe(
+      'The TwitchProvider context is undefined. Verify that useTwitchContext() is being called as a child of a <TwitchProvider> component.',
+    )
   })
 
   it('should expose the context data', async () => {
