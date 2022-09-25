@@ -1,5 +1,7 @@
 import { z } from 'zod'
 import { HTTP_STATUS_MAP } from '../constants/error'
+import { isEmptyString, isString } from './string'
+import { isUrl } from './url'
 
 const TwitchApiError = z.object({
   error: z.string(),
@@ -64,8 +66,8 @@ function safelyValidateTwitchApiError(maybeTwitchApiError: unknown) {
   return isTwitchApiError
 }
 
-function throwOnInvalidClientIdentifier(clientId: string) {
-  const isClientIdValid = clientId && typeof clientId === 'string' && clientId['length']
+function throwOnInvalidClientIdentifier(clientId: unknown) {
+  const isClientIdValid = isString(clientId) && !isEmptyString(clientId)
 
   if (!isClientIdValid)
     throw new Error(
@@ -73,4 +75,20 @@ function throwOnInvalidClientIdentifier(clientId: string) {
     )
 }
 
-export { FetcherError, generateError, getErrorMessage, throwOnInvalidClientIdentifier, UnexpectedTwitchDataError }
+function throwOnInvalidRedirectUri(redirectUri: unknown) {
+  const isRedirectUriValid = isUrl(redirectUri)
+
+  if (!isRedirectUriValid)
+    throw new Error(
+      'You need to provide a valid URL as the redirect URI that will be used as part of the Twitch OAuth flow.',
+    )
+}
+
+export {
+  FetcherError,
+  generateError,
+  getErrorMessage,
+  throwOnInvalidClientIdentifier,
+  throwOnInvalidRedirectUri,
+  UnexpectedTwitchDataError,
+}

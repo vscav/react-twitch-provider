@@ -1,13 +1,10 @@
-const BASE_REDIRECT_PARAMETERS = {
-  redirect_uri: 'http://localhost:3000',
-  response_type: 'token',
-  scope: ['user:read:email'].join(' '),
-}
+import { BASE_REDIRECT_PARAMETERS } from '../constants/twitch-api'
 
-function redirectForToken(clientId: string) {
+function redirectForToken(clientId: string, redirectUri: string) {
   const oauthParamaters = new URLSearchParams({
     ...BASE_REDIRECT_PARAMETERS,
     client_id: clientId,
+    redirect_uri: redirectUri,
   })
   const oauthUrl = `https://id.twitch.tv/oauth2/authorize?${oauthParamaters}`
 

@@ -6,6 +6,15 @@ import { renderWithMockTwitchContext } from '../utils/render-with-twitch'
 enableErrorOutputSuppression()
 
 describe('TwitchProvider', () => {
+  it('should throw on an invalid/malformed redirect URI', async () => {
+    try {
+      await renderWithMockTwitchContext(<div>foo</div>, { clientId: 'bar', redirectUri: 'baz' })
+    } catch (error) {
+      expect(getErrorMessage(error)).toBe(
+        'You need to provide a valid URL as the redirect URI that will be used as part of the Twitch OAuth flow.',
+      )
+    }
+  })
   it('should throw on a missing Twitch client identifier', async () => {
     try {
       await renderWithMockTwitchContext(<div>foo</div>, { clientId: undefined })

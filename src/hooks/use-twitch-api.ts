@@ -6,6 +6,11 @@ import { useTwitchContext } from '../context/use-twitch-context'
 import { FetcherError, generateError } from '../utils/error'
 
 type TwitchApiDataResponse<EntityType> = { data: EntityType }
+
+type TwitchHookBaseReturn = {
+  error?: FetcherError
+  loading: boolean
+}
 type TwitchHookFetcherReturn<EntityDataType> = SWRResponse<EntityDataType, FetcherError>
 
 type CustomRequestInit = Pick<RequestInit, 'method' | 'mode' | 'cache'>
@@ -36,5 +41,5 @@ function useTwitchApi<EntityDataType>(path: string): TwitchHookFetcherReturn<Ent
   return useSWR<EntityDataType, FetcherError>(url, fetcher, { shouldRetryOnError: false, refreshInterval: 10000 })
 }
 
-export type { TwitchApiDataResponse }
+export type { TwitchApiDataResponse, TwitchHookBaseReturn }
 export { useTwitchApi }

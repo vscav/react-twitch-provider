@@ -13,6 +13,7 @@ async function wrapWithMockTwitchContext(givenOptions?: Partial<MockTwitchProvid
   const providerOptions = {
     clientId: data.id,
     clientSecret: data.secret,
+    redirectUri: 'http://localhost',
     token: undefined,
   }
 

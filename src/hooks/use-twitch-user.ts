@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { FetcherError, UnexpectedTwitchDataError } from '../utils/error'
-import type { TwitchApiDataResponse } from './use-twitch-api'
+import { UnexpectedTwitchDataError } from '../utils/error'
+import type { TwitchApiDataResponse, TwitchHookBaseReturn } from './use-twitch-api'
 import { useTwitchApi } from './use-twitch-api'
 
 const USERS_API_ENDPOINT = 'users'
@@ -25,13 +25,7 @@ type Users = User[]
 
 type UsersApiResponse = TwitchApiDataResponse<Users>
 
-// To move away in a more global place of the code base
-type TwitchHooksBaseReturn = {
-  error?: FetcherError
-  loading: boolean
-}
-
-type TwitchUserHookReturn = TwitchHooksBaseReturn & {
+type TwitchUserHookReturn = TwitchHookBaseReturn & {
   data?: User
 }
 

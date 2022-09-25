@@ -5,7 +5,7 @@ import { TwitchProvider } from './context/twitch-provider'
 
 function App() {
   return (
-    <TwitchProvider clientId={TWITCH_CLIENT_ID || ''}>
+    <TwitchProvider clientId={TWITCH_CLIENT_ID || ''} redirectUri='http://localhost:3000'>
       <Greeting />
     </TwitchProvider>
   )
