@@ -37,5 +37,5 @@ function TwitchProvider({ clientId, redirectUri, children }: TwitchProviderProps
   )
 }
 
-export type { TwitchProviderOptions }
+export type { TwitchProviderOptions, TwitchProviderProps }
 export { TwitchProvider }
