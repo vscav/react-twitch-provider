@@ -8,13 +8,21 @@
     "start": "react-scripts start",
     "mock-api": "twitch mock-api start",
     "test": "react-scripts test --testURL=http://localhost:8080",
-    "eject": "react-scripts eject",
-    "lint": "eslint src",
-    "lint:fix": "yarn lint --fix",
-    "prettier": "prettier src --check",
-    "prettier:fix": "yarn run prettier --write",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write .",
     "format": "yarn prettier:fix && yarn lint:fix"
   },
+  "peerDependencies": {
+    "react": ">=16"
+  },
+  "keywords": [
+    "react",
+    "typescript"
+  ],
+  "author": "Vincent Scavinner",
+  "license": "MIT",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -40,6 +48,7 @@
     "@types/react": "^18.0.15",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",
+    "cross-fetch": "^3.1.5",
     "eslint": "^8.17.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
