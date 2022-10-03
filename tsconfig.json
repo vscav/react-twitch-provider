@@ -1,10 +1,11 @@
 {
   "include": [
-    "src"
+    "lib"
   ],
   "exclude": [
     "dist",
-    "node_modules"
+    "node_modules",
+    "tests"
   ],
   "types": [
     "react/next",
@@ -19,7 +20,7 @@
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
-    "rootDir": "src",
+    "rootDir": "lib",
     "outDir": "./dist/esm",
     "strict": true,
     "noImplicitReturns": true,
