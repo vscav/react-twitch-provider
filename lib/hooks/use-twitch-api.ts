@@ -32,7 +32,7 @@ function useTwitchApi<EntityDataType>(path: string): TwitchHookFetcherReturn<Ent
   const url = `${TWITCH_API_ENDPOINT}/${path}`
   const headers = {
     'client-id': clientId,
-    Authorization: `Bearer ${accessToken}`,
+    authorization: `Bearer ${accessToken}`,
   }
 
   const fetcher: Fetcher<EntityDataType, string> = () => twitchApiFetcher<EntityDataType>(url, headers)

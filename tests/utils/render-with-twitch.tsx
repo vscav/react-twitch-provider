@@ -3,12 +3,14 @@ import { render } from '@testing-library/react'
 import type { RenderHookOptions, RenderHookResult } from '@testing-library/react-hooks'
 import { renderHook } from '@testing-library/react-hooks'
 import React from 'react'
+import { SWRConfig } from 'swr'
 import type { MockTwitchProviderOptions } from './mock-twitch-provider'
 import { MockTwitchProvider } from './mock-twitch-provider'
 
-async function wrapWithMockTwitchContext(givenOptions?: Partial<MockTwitchProviderOptions>) {
+function wrapWithMockTwitchContext(givenOptions?: Partial<MockTwitchProviderOptions>) {
   const providerOptions = {
-    clientId: 'foo',
+    accessToken: 'foo',
+    clientId: 'bar',
     redirectUri: 'http://localhost',
   }
 
@@ -17,28 +19,30 @@ async function wrapWithMockTwitchContext(givenOptions?: Partial<MockTwitchProvid
   }
 
   const wrapperFunction = ({ children }: { children?: React.ReactNode }) => (
-    <MockTwitchProvider {...providerOptions}>{children}</MockTwitchProvider>
+    <SWRConfig value={{ provider: () => new Map() }}>
+      <MockTwitchProvider {...providerOptions}>{children}</MockTwitchProvider>
+    </SWRConfig>
   )
 
   return wrapperFunction
 }
 
-async function renderWithMockTwitchContext(
+function renderWithMockTwitchContext(
   ui: React.ReactElement,
   contextOptions?: Partial<MockTwitchProviderOptions>,
   renderOptions?: Omit<RenderOptions, 'wrapper'>,
 ) {
-  return render(ui, { ...renderOptions, wrapper: await wrapWithMockTwitchContext(contextOptions) })
+  return render(ui, { ...renderOptions, wrapper: wrapWithMockTwitchContext(contextOptions) })
 }
 
-async function renderHookWithMockTwitchContext<Props extends { children?: React.ReactNode }, Result>(
+function renderHookWithMockTwitchContext<Props extends { children?: React.ReactNode }, Result>(
   callback: (props: Props) => Result,
   contextOptions?: Partial<MockTwitchProviderOptions>,
   renderHookOptions?: RenderHookOptions<Props>,
-): Promise<RenderHookResult<Props, Result>> {
+): RenderHookResult<Props, Result> {
   const hookRender = renderHook(callback, {
     ...renderHookOptions,
-    wrapper: await wrapWithMockTwitchContext(contextOptions),
+    wrapper: wrapWithMockTwitchContext(contextOptions),
   })
   return hookRender
 }

@@ -1,11 +1,13 @@
 import { rest } from 'msw'
-import { TWITCH_API_ENDPOINT } from '../../lib/constants/twitch-api'
 import { TWITCH_USER_DATA } from './fixtures'
+import { isAccessTokenValid, isClientIdValid } from './guards'
+import { GET_USERS_PATH, OTHER_PATH } from './paths'
+import { wrongAccessToken, wrongClientId } from './responses'
 
-const getUsersPath = `${TWITCH_API_ENDPOINT}/users`
-const otherPaths = `${TWITCH_API_ENDPOINT}/*`
+const usersHandler = rest.get(GET_USERS_PATH, (request, response, context) => {
+  if (!isAccessTokenValid(request.headers.get('authorization'))) return wrongAccessToken(response, context)
+  if (!isClientIdValid(request.headers.get('client-id'))) return wrongClientId(response, context)
 
-const usersHandler = rest.get(getUsersPath, (_, response, context) => {
   return response(
     context.status(200),
     context.json({
@@ -14,13 +16,11 @@ const usersHandler = rest.get(getUsersPath, (_, response, context) => {
   )
 })
 
-const unknownEndpointHandler = rest.get(otherPaths, (_, response, context) => {
-  return response(
-    context.status(404),
-    context.json({
-      data: null,
-    }),
-  )
+const unknownEndpointHandler = rest.get(OTHER_PATH, (request, response, context) => {
+  if (!isAccessTokenValid(request.headers.get('authorization'))) return wrongAccessToken(response, context)
+  if (!isClientIdValid(request.headers.get('client-id'))) return wrongClientId(response, context)
+
+  return response(context.status(404))
 })
 
 const handlers = [usersHandler, unknownEndpointHandler]

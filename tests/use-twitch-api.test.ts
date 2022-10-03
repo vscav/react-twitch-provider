@@ -1,9 +1,10 @@
 import { renderHook } from '@testing-library/react-hooks'
 import mockConsole from 'jest-mock-console'
 import { useTwitchApi } from '../lib/hooks/use-twitch-api'
+import type { UsersApiResponse } from '../lib/hooks/use-twitch-user'
 import { getErrorMessage } from '../lib/utils/error'
 import { renderHookWithMockTwitchContext } from './utils/render-with-twitch'
-import { TWITCH_USERS_DATA } from './__mocks__/fixtures'
+import { TWITCH_INVALID_CLIENT_ID, TWITCH_INVALID_OAUTH_TOKEN, TWITCH_USERS_DATA } from './__mocks__/fixtures'
 
 describe('useTwitchApi', () => {
   it('should throw an error if used outside a Twitch provider', () => {
@@ -17,7 +18,7 @@ describe('useTwitchApi', () => {
   })
 
   it('should return a 200 response with data when using an existing Twitch API endpoint', async () => {
-    const { result, waitForNextUpdate } = await renderHookWithMockTwitchContext(() => useTwitchApi('users'))
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchApi<UsersApiResponse>('users'))
 
     expect(result.current.isValidating).toBeTruthy()
     expect(result.current.error).toBeUndefined()
@@ -30,8 +31,44 @@ describe('useTwitchApi', () => {
     expect(result.current.data).toEqual({ data: TWITCH_USERS_DATA })
   })
 
+  it('should return a 401 error on an invalid Twitch OAuth token', async () => {
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchApi(''), {
+      accessToken: TWITCH_INVALID_OAUTH_TOKEN,
+    })
+
+    expect(result.current.isValidating).toBeTruthy()
+    expect(result.current.data).toBeUndefined()
+    expect(result.current.error).toBeUndefined()
+
+    await waitForNextUpdate()
+
+    expect(result.current.isValidating).toBeFalsy()
+
+    expect(result.current.error?.status).toBe(401)
+    expect(result.current.error?.name).toBe('Unauthorized')
+    expect(result.current.error?.message).toBe('Invalid OAuth token')
+  })
+
+  it('should return a 401 error on an invalid Twitch client identifier', async () => {
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchApi(''), {
+      clientId: TWITCH_INVALID_CLIENT_ID,
+    })
+
+    expect(result.current.isValidating).toBeTruthy()
+    expect(result.current.data).toBeUndefined()
+    expect(result.current.error).toBeUndefined()
+
+    await waitForNextUpdate()
+
+    expect(result.current.isValidating).toBeFalsy()
+
+    expect(result.current.error?.status).toBe(401)
+    expect(result.current.error?.name).toBe('Unauthorized')
+    expect(result.current.error?.message).toBe('Client ID and OAuth token do not match')
+  })
+
   it('should return a 404 error if the endpoint does not exist in the Twitch API', async () => {
-    const { result, waitForNextUpdate } = await renderHookWithMockTwitchContext(() => useTwitchApi('foo'))
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchApi('foo'))
 
     expect(result.current.isValidating).toBeTruthy()
     expect(result.current.error).toBeUndefined()

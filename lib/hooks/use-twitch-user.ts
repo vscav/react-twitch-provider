@@ -64,4 +64,5 @@ function useTwitchUser(): TwitchUserHookReturn {
   return { ...loadingState, data: userData, error }
 }
 
+export type { UsersApiResponse }
 export { useTwitchUser }
