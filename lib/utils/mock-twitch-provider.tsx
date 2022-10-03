@@ -1,8 +1,8 @@
+import { TwitchContext } from '@/context/twitch-context'
+import { TwitchProviderOptions, TwitchProviderProps } from '@/context/twitch-provider'
+import { throwOnInvalidClientIdentifier, throwOnInvalidRedirectUri } from '@/utils/error'
+import { getMockedAccessToken } from '@/utils/mock-api'
 import React from 'react'
-import { TwitchContext } from '../context/twitch-context'
-import { TwitchProviderOptions, TwitchProviderProps } from '../context/twitch-provider'
-import { throwOnInvalidClientIdentifier, throwOnInvalidRedirectUri } from './error'
-import { getMockedAccessToken } from './mock-api'
 
 type MockTwitchProviderOptions = TwitchProviderOptions & {
   clientSecret: string

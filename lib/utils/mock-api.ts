@@ -1,4 +1,4 @@
-import { generateError } from './error'
+import { generateError } from '@/utils/error'
 
 type TwitchClient = {
   id: string

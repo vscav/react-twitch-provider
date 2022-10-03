@@ -1,7 +1,7 @@
+import type { TwitchApiDataResponse, TwitchHookBaseReturn } from '@/hooks/use-twitch-api'
+import { useTwitchApi } from '@/hooks/use-twitch-api'
+import { UnexpectedTwitchDataError } from '@/utils/error'
 import { z } from 'zod'
-import { UnexpectedTwitchDataError } from '../utils/error'
-import type { TwitchApiDataResponse, TwitchHookBaseReturn } from './use-twitch-api'
-import { useTwitchApi } from './use-twitch-api'
 
 const USERS_API_ENDPOINT = 'users'
 
