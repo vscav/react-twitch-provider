@@ -1,4 +1,4 @@
-import { BASE_REDIRECT_PARAMETERS } from '@/constants/twitch-api'
+import { BASE_REDIRECT_PARAMETERS } from '@constants/twitch-api'
 
 function redirectForToken(clientId: string, redirectUri: string) {
   const oauthParamaters = new URLSearchParams({

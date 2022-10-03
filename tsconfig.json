@@ -1,6 +1,8 @@
 {
   "include": [
-    "lib"
+    "lib",
+    "tests/utils/mock-twitch-provider.tsx",
+    "tests/utils/console.ts"
   ],
   "exclude": [
     "dist",
@@ -33,5 +35,5 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
   },
-  "extends": "./tsconfig.paths.json"
+  "extends": "./tsconfig.aliases.json"
 }

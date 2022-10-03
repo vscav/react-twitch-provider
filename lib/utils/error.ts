@@ -1,6 +1,6 @@
-import { HTTP_STATUS_MAP } from '@/constants/error'
-import { isEmptyString, isString } from '@/utils/string'
-import { isUrl } from '@/utils/url'
+import { HTTP_STATUS_MAP } from '@constants/error'
+import { isEmptyString, isString } from '@utils/string'
+import { isUrl } from '@utils/url'
 import { z } from 'zod'
 
 const TwitchApiError = z.object({

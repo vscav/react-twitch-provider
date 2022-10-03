@@ -1,20 +1,15 @@
-import { getMockedClient } from '@/utils/mock-api'
-import type { MockTwitchProviderOptions } from '@/utils/mock-twitch-provider'
-import { MockTwitchProvider } from '@/utils/mock-twitch-provider'
 import type { RenderOptions } from '@testing-library/react'
 import { render } from '@testing-library/react'
 import type { RenderHookOptions, RenderHookResult } from '@testing-library/react-hooks'
 import { renderHook } from '@testing-library/react-hooks'
 import React from 'react'
+import type { MockTwitchProviderOptions } from './mock-twitch-provider'
+import { MockTwitchProvider } from './mock-twitch-provider'
 
 async function wrapWithMockTwitchContext(givenOptions?: Partial<MockTwitchProviderOptions>) {
-  const data = await getMockedClient()
-
   const providerOptions = {
-    clientId: data.id,
-    clientSecret: data.secret,
+    clientId: 'foo',
     redirectUri: 'http://localhost',
-    token: undefined,
   }
 
   if (givenOptions) {
@@ -45,7 +40,6 @@ async function renderHookWithMockTwitchContext<Props extends { children?: React.
     ...renderHookOptions,
     wrapper: await wrapWithMockTwitchContext(contextOptions),
   })
-  await hookRender.waitForNextUpdate()
   return hookRender
 }
 
