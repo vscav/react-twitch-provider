@@ -40,6 +40,16 @@ describe('TwitchProvider', () => {
     }
   })
 
+  it('should throw on a defined but empty redirect URI', async () => {
+    try {
+      renderWithMockTwitchContext(<div>foo</div>, { redirectUri: '' })
+    } catch (error) {
+      expect(getErrorMessage(error)).toBe(
+        'You need to provide a valid URL as the redirect URI that will be used as part of the Twitch OAuth flow.',
+      )
+    }
+  })
+
   it('should throw on an invalid/malformed redirect URI', async () => {
     try {
       renderWithMockTwitchContext(<div>foo</div>, { redirectUri: 'www.bar.com' })
