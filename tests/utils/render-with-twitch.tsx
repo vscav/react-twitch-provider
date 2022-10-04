@@ -4,8 +4,8 @@ import type { RenderHookOptions, RenderHookResult } from '@testing-library/react
 import { renderHook } from '@testing-library/react-hooks'
 import React from 'react'
 import { SWRConfig } from 'swr'
-import type { MockTwitchProviderOptions } from './mock-twitch-provider'
-import { MockTwitchProvider } from './mock-twitch-provider'
+import type { MockTwitchProviderOptions } from '../__mocks__/provider'
+import { MockTwitchProvider } from '../__mocks__/provider'
 
 function wrapWithMockTwitchContext(givenOptions?: Partial<MockTwitchProviderOptions>) {
   const providerOptions = {

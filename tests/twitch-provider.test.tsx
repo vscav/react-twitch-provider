@@ -2,6 +2,7 @@ import type { RestoreConsole } from 'jest-mock-console'
 import mockConsole from 'jest-mock-console'
 import React from 'react'
 import { renderWithMockTwitchContext } from './utils/render-with-twitch'
+import { spyRedirectForToken } from './__mocks__/provider'
 
 describe('TwitchProvider', () => {
   let restoreConsole: RestoreConsole
@@ -47,5 +48,10 @@ describe('TwitchProvider', () => {
         'You need to provide a valid URL as the redirect URI that will be used as part of the Twitch OAuth flow.',
       ),
     )
+  })
+
+  it('should redirect the user to obtain an access token if it is still undefined', () => {
+    renderWithMockTwitchContext(<div>foo</div>, { accessToken: undefined })
+    expect(spyRedirectForToken).toHaveBeenCalledTimes(1)
   })
 })
