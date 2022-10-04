@@ -4,6 +4,7 @@ import { useTwitchUser } from '../lib/hooks/use-twitch-user'
 import { getErrorMessage } from '../lib/utils/error'
 import { renderHookWithMockTwitchContext } from './utils/render-with-twitch'
 import {
+  TWITCH_INTERNAL_SERVER_ERROR_RESPONSE,
   TWITCH_INVALID_CLIENT_ID,
   TWITCH_INVALID_OAUTH_TOKEN,
   TWITCH_USER_DATA,
@@ -100,5 +101,27 @@ describe('useTwitchUser', () => {
     expect(result.current.error?.message).toBe(
       'The response received from the Twitch API does not respect the expected format for a user object. It might has been caused by breaking changes in the Twitch API that are not currently handled in the library.',
     )
+  })
+
+  it('should return a 500 error on an internal server error', async () => {
+    server.use(
+      rest.get(USERS_PATH, (_, response, context) => {
+        return response(context.status(500), context.json(TWITCH_INTERNAL_SERVER_ERROR_RESPONSE))
+      }),
+    )
+
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchUser())
+
+    expect(result.current.loading).toBeTruthy()
+    expect(result.current.error).toBeUndefined()
+    expect(result.current.data).toBeUndefined()
+
+    await waitForNextUpdate()
+
+    expect(result.current.loading).toBeFalsy()
+
+    expect(result.current.error?.status).toBe(500)
+    expect(result.current.error?.name).toBe('Internal Server Error')
+    expect(result.current.error?.message).toBe('For an unknown reason, the server cannot process the request')
   })
 })

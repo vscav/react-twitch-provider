@@ -4,7 +4,14 @@ import { useTwitchApi } from '../lib/hooks/use-twitch-api'
 import type { UsersApiResponse } from '../lib/hooks/use-twitch-user'
 import { getErrorMessage } from '../lib/utils/error'
 import { renderHookWithMockTwitchContext } from './utils/render-with-twitch'
-import { TWITCH_INVALID_CLIENT_ID, TWITCH_INVALID_OAUTH_TOKEN, TWITCH_USERS_DATA } from './__mocks__/fixtures'
+import {
+  TWITCH_INTERNAL_SERVER_ERROR_RESPONSE,
+  TWITCH_INVALID_CLIENT_ID,
+  TWITCH_INVALID_OAUTH_TOKEN,
+  TWITCH_USERS_DATA,
+} from './__mocks__/fixtures'
+import { USERS_PATH } from './__mocks__/paths'
+import { rest, server } from './__mocks__/server'
 
 describe('useTwitchApi', () => {
   it('should throw an error if used outside a Twitch provider', () => {
@@ -83,5 +90,27 @@ describe('useTwitchApi', () => {
     expect(result.current.error?.status).toBe(404)
     expect(result.current.error?.name).toBe('Not Found')
     expect(result.current.error?.message).toBe('The requested resource could not be found')
+  })
+
+  it('should return a 500 error on an internal server error', async () => {
+    server.use(
+      rest.get(USERS_PATH, (_, response, context) => {
+        return response(context.status(500), context.json(TWITCH_INTERNAL_SERVER_ERROR_RESPONSE))
+      }),
+    )
+
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchApi('users'))
+
+    expect(result.current.isValidating).toBeTruthy()
+    expect(result.current.error).toBeUndefined()
+    expect(result.current.data).toBeUndefined()
+
+    await waitForNextUpdate()
+
+    expect(result.current.isValidating).toBeFalsy()
+
+    expect(result.current.error?.status).toBe(500)
+    expect(result.current.error?.name).toBe('Internal Server Error')
+    expect(result.current.error?.message).toBe('For an unknown reason, the server cannot process the request')
   })
 })
