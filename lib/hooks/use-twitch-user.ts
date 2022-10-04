@@ -1,9 +1,8 @@
+import { z } from 'zod'
+import { TWITCH_API_USERS_ENDPOINT } from '../constants/twitch-api'
+import { UnexpectedTwitchDataError } from '../utils/error'
 import type { TwitchApiDataResponse, TwitchHookBaseReturn } from './use-twitch-api'
 import { useTwitchApi } from './use-twitch-api'
-import { UnexpectedTwitchDataError } from '../utils/error'
-import { z } from 'zod'
-
-const USERS_API_ENDPOINT = 'users'
 
 const User = z.object({
   /**
@@ -87,7 +86,7 @@ function safelyValidateUserData(maybeUserData: unknown) {
  * See the [Twitch API endpoint documentation](https://dev.twitch.tv/docs/api/reference#get-users) for more information.
  */
 function useTwitchUser(): TwitchUserHookReturn {
-  const { data, error, isValidating } = useTwitchApi<UsersApiResponse>(USERS_API_ENDPOINT)
+  const { data, error, isValidating } = useTwitchApi<UsersApiResponse>(TWITCH_API_USERS_ENDPOINT)
 
   const needsDataValidation = data && !isValidating && !error
 

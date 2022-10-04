@@ -1,6 +1,6 @@
-import { TWITCH_API_ENDPOINT } from '../../lib/constants/twitch-api'
+import { TWITCH_API_BASE_URL, TWITCH_API_USERS_ENDPOINT } from '../../lib/constants/twitch-api'
 
-const GET_USERS_PATH = `${TWITCH_API_ENDPOINT}/users`
-const OTHER_PATH = `${TWITCH_API_ENDPOINT}/*`
+const USERS_PATH = `${TWITCH_API_BASE_URL}/${TWITCH_API_USERS_ENDPOINT}`
+const OTHER_PATH = `${TWITCH_API_BASE_URL}/*`
 
-export { GET_USERS_PATH, OTHER_PATH }
+export { USERS_PATH, OTHER_PATH }

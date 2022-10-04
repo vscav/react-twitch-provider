@@ -1,4 +1,4 @@
-import { TWITCH_API_ENDPOINT } from '../constants/twitch-api'
+import { TWITCH_API_BASE_URL } from '../constants/twitch-api'
 import { useTwitchContext } from '../context/use-twitch-context'
 import { FetcherError, generateError } from '../utils/error'
 import type { Fetcher, SWRResponse } from 'swr'
@@ -26,10 +26,10 @@ async function twitchApiFetcher<FetcherResponse>(url: string, headers: HeadersIn
   return response.json()
 }
 
-function useTwitchApi<EntityDataType>(path: string): TwitchHookFetcherReturn<EntityDataType> {
+function useTwitchApi<EntityDataType>(endpoint: string): TwitchHookFetcherReturn<EntityDataType> {
   const { accessToken, clientId } = useTwitchContext()
 
-  const url = `${TWITCH_API_ENDPOINT}/${path}`
+  const url = `${TWITCH_API_BASE_URL}/${endpoint}`
   const headers = {
     'client-id': clientId,
     authorization: `Bearer ${accessToken}`,
