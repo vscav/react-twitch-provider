@@ -23,12 +23,12 @@ const User = z.object({
   /**
    * User’s type: "staff", "admin", "global_mod", or "".
    */
-  type: z.string(),
+  type: z.enum(['staff', 'admin', 'global_mod', '']),
 
   /**
    * The user’s broadcaster type: "partner", "affiliate", or "".
    */
-  broadcaster_type: z.string(),
+  broadcaster_type: z.enum(['partner', 'affiliate', '']),
 
   /**
    * User’s channel description.
