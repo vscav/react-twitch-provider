@@ -53,7 +53,7 @@ const User = z.object({
   /**
    * User’s verified email address
    */
-  email: z.string(),
+  email: z.string().email(),
 
   /**
    * Date when the user was created.
