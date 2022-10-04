@@ -40,11 +40,10 @@ function renderHookWithMockTwitchContext<Props extends { children?: React.ReactN
   contextOptions?: Partial<MockTwitchProviderOptions>,
   renderHookOptions?: RenderHookOptions<Props>,
 ): RenderHookResult<Props, Result> {
-  const hookRender = renderHook(callback, {
+  return renderHook(callback, {
     ...renderHookOptions,
     wrapper: wrapWithMockTwitchContext(contextOptions),
   })
-  return hookRender
 }
 
 export { renderHookWithMockTwitchContext, renderWithMockTwitchContext }
