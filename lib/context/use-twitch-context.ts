@@ -1,5 +1,5 @@
-import { TwitchContext } from './twitch-context'
 import React from 'react'
+import { TwitchContext } from './twitch-context'
 
 function useTwitchContext() {
   const context = React.useContext(TwitchContext)

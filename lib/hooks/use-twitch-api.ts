@@ -1,8 +1,8 @@
+import type { Fetcher, SWRResponse } from 'swr'
+import useSWR from 'swr'
 import { TWITCH_API_BASE_URL } from '../constants/twitch-api'
 import { useTwitchContext } from '../context/use-twitch-context'
 import { FetcherError, generateError } from '../utils/error'
-import type { Fetcher, SWRResponse } from 'swr'
-import useSWR from 'swr'
 
 type TwitchApiDataResponse<EntityType> = { data: EntityType }
 

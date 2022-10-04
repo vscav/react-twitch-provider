@@ -1,7 +1,7 @@
 import { rest } from 'msw'
 import { TWITCH_USER_DATA } from './fixtures'
 import { isAccessTokenValid, isClientIdValid } from './guards'
-import { USERS_PATH, OTHER_PATH } from './paths'
+import { OTHER_PATH, USERS_PATH } from './paths'
 import { wrongAccessToken, wrongClientId } from './responses'
 
 const getUsersHandler = rest.get(USERS_PATH, (request, response, context) => {
