@@ -8,7 +8,7 @@ type TwitchApiDataResponse<EntityType> = { data: EntityType }
 
 type TwitchHookBaseReturn = {
   error?: FetcherError
-  loading: boolean
+  isValidating: boolean
 }
 type TwitchHookFetcherReturn<EntityDataType> = SWRResponse<EntityDataType, FetcherError>
 

@@ -90,20 +90,19 @@ function useTwitchUser(): TwitchUserHookReturn {
 
   const needsDataValidation = data && !isValidating && !error
 
-  const loadingState = { loading: isValidating }
-
   const [userData] = data?.data || []
 
-  const isUserDataValid = safelyValidateUserData(userData)
-
-  if (needsDataValidation && !isUserDataValid) {
-    return {
-      ...loadingState,
-      error: new UnexpectedTwitchDataError(),
+  if (needsDataValidation) {
+    const isUserDataValid = safelyValidateUserData(userData)
+    if (!isUserDataValid) {
+      return {
+        error: new UnexpectedTwitchDataError(),
+        isValidating,
+      }
     }
   }
 
-  return { ...loadingState, data: userData, error }
+  return { data: userData, error, isValidating }
 }
 
 export type { UsersApiResponse }
