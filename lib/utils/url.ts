@@ -1,4 +1,4 @@
-import { isEmptyString, isString } from '@utils/string'
+import { isEmptyString, isString } from './string'
 
 function isUrl(value: any) {
   let res = false
