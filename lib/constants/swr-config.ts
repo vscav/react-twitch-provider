@@ -1,3 +1,5 @@
-import { SWRConfig } from 'swr'
+import type { SWRConfiguration } from 'swr'
 
-export const DEFAULT_SWR_CONFIG = SWRConfig.default
+type FetcherConfig = Omit<SWRConfiguration, 'fetcher'>
+
+export type { FetcherConfig }

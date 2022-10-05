@@ -2,7 +2,7 @@ import type { RestoreConsole } from 'jest-mock-console'
 import mockConsole from 'jest-mock-console'
 import React from 'react'
 import { renderWithMockTwitchContext } from './utils/render-with-twitch'
-import { spyRedirectForToken } from './__mocks__/provider'
+import { redirectForToken } from './__mocks__/provider'
 
 describe('TwitchProvider', () => {
   let restoreConsole: RestoreConsole
@@ -52,6 +52,6 @@ describe('TwitchProvider', () => {
 
   it('should redirect the user to obtain an access token if it is still undefined', () => {
     renderWithMockTwitchContext(<div>foo</div>, { accessToken: undefined })
-    expect(spyRedirectForToken).toHaveBeenCalledTimes(1)
+    expect(redirectForToken).toHaveBeenCalledTimes(1)
   })
 })

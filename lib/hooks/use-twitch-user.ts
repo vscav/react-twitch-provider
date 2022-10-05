@@ -89,6 +89,7 @@ function useTwitchUser(): TwitchUserHookReturn {
   const { data, error, isValidating } = useTwitchApi<UsersApiResponse>(TWITCH_API_USERS_ENDPOINT)
 
   const needsDataValidation = data && !isValidating && !error
+  const isLoading = !error && !data
 
   const [userData] = data?.data || []
 
@@ -98,11 +99,12 @@ function useTwitchUser(): TwitchUserHookReturn {
       return {
         error: new UnexpectedTwitchDataError(),
         isValidating,
+        isLoading,
       }
     }
   }
 
-  return { data: userData, error, isValidating }
+  return { data: userData, error, isValidating, isLoading }
 }
 
 export type { UsersApiResponse }

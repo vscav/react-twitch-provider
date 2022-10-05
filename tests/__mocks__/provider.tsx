@@ -4,7 +4,7 @@ import { TwitchProviderOptions, TwitchProviderProps } from '../../lib/context/tw
 import * as apiUtilsModule from '../../lib/utils/api'
 import { throwOnInvalidClientIdentifier, throwOnInvalidRedirectUri } from '../../lib/utils/error'
 
-const spyRedirectForToken = jest.spyOn(apiUtilsModule, 'redirectForToken').mockImplementation()
+const redirectForToken = jest.spyOn(apiUtilsModule, 'redirectForToken').mockImplementation()
 
 type MockTwitchProviderOptions = TwitchProviderOptions & {
   accessToken: string
@@ -34,4 +34,4 @@ function MockTwitchProvider({ accessToken, clientId, redirectUri, children }: Mo
 }
 
 export type { MockTwitchProviderOptions }
-export { MockTwitchProvider, spyRedirectForToken }
+export { MockTwitchProvider, redirectForToken }

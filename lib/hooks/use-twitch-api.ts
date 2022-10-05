@@ -9,6 +9,7 @@ type TwitchApiDataResponse<EntityType> = { data: EntityType }
 type TwitchHookBaseReturn = {
   error?: FetcherError
   isValidating: boolean
+  isLoading: boolean
 }
 type TwitchHookFetcherReturn<EntityDataType> = SWRResponse<EntityDataType, FetcherError>
 
@@ -29,15 +30,15 @@ async function twitchApiFetcher<FetcherResponse>(url: string, headers: HeadersIn
 function useTwitchApi<EntityDataType>(endpoint: string): TwitchHookFetcherReturn<EntityDataType> {
   const { accessToken, clientId } = useTwitchContext()
 
-  const url = `${TWITCH_API_BASE_URL}/${endpoint}`
+  const path = `${TWITCH_API_BASE_URL}/${endpoint}`
   const headers = {
     'client-id': clientId,
     authorization: `Bearer ${accessToken}`,
   }
 
-  const fetcher: Fetcher<EntityDataType, string> = () => twitchApiFetcher<EntityDataType>(url, headers)
+  const fetcher: Fetcher<EntityDataType, string> = () => twitchApiFetcher<EntityDataType>(path, headers)
 
-  return useSWR<EntityDataType, FetcherError>(url, fetcher, { shouldRetryOnError: false, refreshInterval: 10000 })
+  return useSWR<EntityDataType, FetcherError>(path, fetcher, { shouldRetryOnError: false, refreshInterval: 10000 })
 }
 
 export type { TwitchApiDataResponse, TwitchHookBaseReturn }

@@ -28,12 +28,14 @@ describe('useTwitchUser', () => {
     const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchUser())
 
     expect(result.current.isValidating).toBeTruthy()
+    expect(result.current.isLoading).toBeTruthy()
     expect(result.current.error).toBeUndefined()
     expect(result.current.data).toBeUndefined()
 
     await waitForNextUpdate()
 
     expect(result.current.isValidating).toBeFalsy()
+    expect(result.current.isLoading).toBeFalsy()
     expect(result.current.error).toBeUndefined()
     expect(result.current.data).toEqual(TWITCH_USER_DATA)
   })
@@ -44,12 +46,14 @@ describe('useTwitchUser', () => {
     })
 
     expect(result.current.isValidating).toBeTruthy()
+    expect(result.current.isLoading).toBeTruthy()
     expect(result.current.data).toBeUndefined()
     expect(result.current.error).toBeUndefined()
 
     await waitForNextUpdate()
 
     expect(result.current.isValidating).toBeFalsy()
+    expect(result.current.isLoading).toBeFalsy()
 
     expect(result.current.error?.status).toBe(401)
     expect(result.current.error?.name).toBe('Unauthorized')
@@ -62,12 +66,14 @@ describe('useTwitchUser', () => {
     })
 
     expect(result.current.isValidating).toBeTruthy()
+    expect(result.current.isLoading).toBeTruthy()
     expect(result.current.data).toBeUndefined()
     expect(result.current.error).toBeUndefined()
 
     await waitForNextUpdate()
 
     expect(result.current.isValidating).toBeFalsy()
+    expect(result.current.isLoading).toBeFalsy()
 
     expect(result.current.error?.status).toBe(401)
     expect(result.current.error?.name).toBe('Unauthorized')
@@ -89,12 +95,14 @@ describe('useTwitchUser', () => {
     const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchUser())
 
     expect(result.current.isValidating).toBeTruthy()
+    expect(result.current.isLoading).toBeTruthy()
     expect(result.current.error).toBeUndefined()
     expect(result.current.data).toBeUndefined()
 
     await waitForNextUpdate()
 
     expect(result.current.isValidating).toBeFalsy()
+    expect(result.current.isLoading).toBeFalsy()
 
     expect(result.current.error?.status).toBe(422)
     expect(result.current.error?.name).toBe('Unexpected Twitch data format')
@@ -113,12 +121,14 @@ describe('useTwitchUser', () => {
     const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchUser())
 
     expect(result.current.isValidating).toBeTruthy()
+    expect(result.current.isLoading).toBeTruthy()
     expect(result.current.error).toBeUndefined()
     expect(result.current.data).toBeUndefined()
 
     await waitForNextUpdate()
 
     expect(result.current.isValidating).toBeFalsy()
+    expect(result.current.isLoading).toBeFalsy()
 
     expect(result.current.error?.status).toBe(500)
     expect(result.current.error?.name).toBe('Internal Server Error')
