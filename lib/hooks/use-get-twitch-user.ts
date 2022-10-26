@@ -85,7 +85,7 @@ function safelyValidateUserData(maybeUserData: unknown) {
  *
  * See the [Twitch API endpoint documentation](https://dev.twitch.tv/docs/api/reference#get-users) for more information.
  */
-function useTwitchUser(): TwitchUserHookReturn {
+function useGetTwitchUser(): TwitchUserHookReturn {
   const { data, error, isValidating } = useTwitchApi<UsersApiResponse>(TWITCH_API_USERS_ENDPOINT)
 
   const needsDataValidation = data && !isValidating && !error
@@ -108,4 +108,4 @@ function useTwitchUser(): TwitchUserHookReturn {
 }
 
 export type { UsersApiResponse }
-export { useTwitchUser }
+export { useGetTwitchUser }
