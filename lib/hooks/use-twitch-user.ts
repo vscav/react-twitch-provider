@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { ENTITY_IDENTIFIER } from '../constants/identifier'
 import { TWITCH_API_USERS_ENDPOINT } from '../constants/twitch-api'
 import { UnexpectedTwitchDataError } from '../utils/error'
 import type { TwitchApiDataResponse, TwitchHookBaseReturn } from './use-twitch-api'
@@ -97,7 +98,7 @@ function useTwitchUser(): TwitchUserHookReturn {
     const isUserDataValid = safelyValidateUserData(userData)
     if (!isUserDataValid) {
       return {
-        error: new UnexpectedTwitchDataError(),
+        error: new UnexpectedTwitchDataError(ENTITY_IDENTIFIER.USER),
         isValidating,
         isLoading,
       }

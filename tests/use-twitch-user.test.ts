@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks'
 import mockConsole from 'jest-mock-console'
+import { ENTITY_IDENTIFIER } from '../lib/constants/identifier'
 import { useTwitchUser } from '../lib/hooks'
 import { getErrorMessage } from '../lib/utils/error'
 import { renderHookWithMockTwitchContext } from './utils/render-with-twitch'
@@ -107,7 +108,7 @@ describe('useTwitchUser', () => {
     expect(result.current.error?.status).toBe(422)
     expect(result.current.error?.name).toBe('Unexpected Twitch data format')
     expect(result.current.error?.message).toBe(
-      'The response received from the Twitch API does not respect the expected format for a user object. It might has been caused by breaking changes in the Twitch API that are not currently handled in the library.',
+      `The response received from the Twitch API does not respect the expected format for the ${ENTITY_IDENTIFIER.USER} object. It might has been caused by breaking changes in the Twitch API that are not currently handled in the library.`,
     )
   })
 
