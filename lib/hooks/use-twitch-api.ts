@@ -3,7 +3,7 @@ import useSWR from 'swr'
 import { TWITCH_API_BASE_URL } from '../constants/twitch-api'
 import { useTwitchContext } from '../context/use-twitch-context'
 import { FetcherError, generateError } from '../utils/error'
-import { HTTPMethod } from '../utils/http'
+import { HTTPMethod, HTTPMethods } from '../utils/http'
 
 type TwitchApiDataResponse<EntityType> = { data: EntityType }
 
@@ -31,7 +31,10 @@ async function twitchApiFetcher<FetcherResponse>(
   return response.json()
 }
 
-function useTwitchApi<EntityDataType>(endpoint: string, method: HTTPMethod): TwitchHookFetcherReturn<EntityDataType> {
+function useTwitchApi<EntityDataType>(
+  endpoint: string,
+  method: HTTPMethod = HTTPMethods.get,
+): TwitchHookFetcherReturn<EntityDataType> {
   const { accessToken, clientId } = useTwitchContext()
 
   const path = `${TWITCH_API_BASE_URL}/${endpoint}`
