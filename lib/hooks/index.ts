@@ -1,1 +1,1 @@
-export { useGetTwitchUser } from './use-get-twitch-user'
+export { useTwitchUser } from './use-twitch-user'

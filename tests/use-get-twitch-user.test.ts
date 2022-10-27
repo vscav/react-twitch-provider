@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks'
 import mockConsole from 'jest-mock-console'
-import { useGetTwitchUser } from '../lib/hooks'
+import { useTwitchUser } from '../lib/hooks'
 import { getErrorMessage } from '../lib/utils/error'
 import { renderHookWithMockTwitchContext } from './utils/render-with-twitch'
 import {
@@ -13,10 +13,10 @@ import {
 import { USERS_PATH } from './__mocks__/paths'
 import { rest, server } from './__mocks__/server'
 
-describe('useGetTwitchUser', () => {
+describe('useTwitchUser', () => {
   it('should throw an error if used outside a Twitch provider', () => {
     const restoreConsole = mockConsole()
-    const { result } = renderHook(() => useGetTwitchUser())
+    const { result } = renderHook(() => useTwitchUser())
     expect(console.error).toHaveBeenCalled()
     expect(getErrorMessage(result.error)).toBe(
       'The TwitchProvider context is undefined. Verify that useTwitchContext() is being called as a child of a <TwitchProvider> component.',
@@ -25,7 +25,7 @@ describe('useGetTwitchUser', () => {
   })
 
   it('should return a 200 response with data when using an existing Twitch API endpoint', async () => {
-    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useGetTwitchUser())
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchUser())
 
     expect(result.current.isValidating).toBeTruthy()
     expect(result.current.isLoading).toBeTruthy()
@@ -41,7 +41,7 @@ describe('useGetTwitchUser', () => {
   })
 
   it('should return a 401 error on an invalid Twitch OAuth token', async () => {
-    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useGetTwitchUser(), {
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchUser(), {
       accessToken: TWITCH_INVALID_OAUTH_TOKEN,
     })
 
@@ -61,7 +61,7 @@ describe('useGetTwitchUser', () => {
   })
 
   it('should return a 401 error on an invalid Twitch client identifier', async () => {
-    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useGetTwitchUser(), {
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchUser(), {
       clientId: TWITCH_INVALID_CLIENT_ID,
     })
 
@@ -92,7 +92,7 @@ describe('useGetTwitchUser', () => {
       }),
     )
 
-    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useGetTwitchUser())
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchUser())
 
     expect(result.current.isValidating).toBeTruthy()
     expect(result.current.isLoading).toBeTruthy()
@@ -118,7 +118,7 @@ describe('useGetTwitchUser', () => {
       }),
     )
 
-    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useGetTwitchUser())
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchUser())
 
     expect(result.current.isValidating).toBeTruthy()
     expect(result.current.isLoading).toBeTruthy()

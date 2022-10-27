@@ -1,2 +1,2 @@
 export { TwitchProvider } from './context'
-export { useGetTwitchUser } from './hooks'
+export { useTwitchUser } from './hooks'
