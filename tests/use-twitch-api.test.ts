@@ -38,6 +38,12 @@ describe('useTwitchApi', () => {
     expect(result.current.data).toEqual({ data: TWITCH_USERS_DATA })
   })
 
+  it('should not performed the request with a null parameter', async () => {
+    const { result } = renderHookWithMockTwitchContext(() => useTwitchApi(null))
+
+    expect(result.current.isValidating).toBeFalsy()
+  })
+
   it('should return a 401 error on an invalid Twitch OAuth token', async () => {
     const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchApi('users'), {
       accessToken: TWITCH_INVALID_OAUTH_TOKEN,
