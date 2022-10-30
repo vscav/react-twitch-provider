@@ -1,7 +1,6 @@
 import React from 'react'
 import { TOKEN_PARAM_IDENTIFIER } from '../constants/twitch-api'
-import { redirectForToken } from '../utils/api'
-import { throwOnInvalidClientIdentifier, throwOnInvalidRedirectUri } from '../utils/error'
+import { redirectForToken, throwOnInvalidClientIdentifier, throwOnInvalidRedirectUri } from '../utils'
 import { TwitchContext } from './twitch-context'
 
 type TwitchProviderOptions = {

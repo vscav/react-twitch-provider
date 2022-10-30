@@ -1,28 +1,12 @@
-import type { Fetcher, SWRResponse } from 'swr'
+import type { Fetcher } from 'swr'
 import useSWR from 'swr'
-import type { nullableString } from '../@types'
-import { TWITCH_API_BASE_URL } from '../constants/twitch-api'
+import type { nullableString, TwitchHookFetcherReturn } from '../@types'
+import { REQUEST_INIT, TWITCH_API_BASE_URL } from '../constants'
 import { useTwitchContext } from '../context/use-twitch-context'
-import { FetcherError, generateError } from '../utils/error'
-
-type TwitchApiDataResponse<EntityType> = { data: EntityType }
-
-type TwitchHookBaseReturn = {
-  error?: FetcherError
-  isValidating: boolean
-  isLoading: boolean
-}
-type TwitchHookFetcherReturn<EntityDataType> = SWRResponse<EntityDataType, FetcherError>
-
-type CustomRequestInit = Pick<RequestInit, 'method' | 'mode' | 'cache'>
-const requestInit: CustomRequestInit = {
-  method: 'get',
-  mode: 'cors',
-  cache: 'no-store',
-}
+import { FetcherError, generateError } from '../utils'
 
 async function twitchApiFetcher<FetcherResponse>(url: string, headers: HeadersInit): Promise<FetcherResponse> {
-  const response = await fetch(url, { ...requestInit, headers })
+  const response = await fetch(url, { ...REQUEST_INIT, headers })
   if (!response.ok) throw await generateError(response)
 
   return response.json()
@@ -45,5 +29,4 @@ function useTwitchApi<EntityDataType>(endpoint: nullableString): TwitchHookFetch
   })
 }
 
-export type { TwitchApiDataResponse, TwitchHookBaseReturn }
 export { useTwitchApi }

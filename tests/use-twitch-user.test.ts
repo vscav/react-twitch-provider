@@ -2,8 +2,8 @@ import { renderHook } from '@testing-library/react-hooks'
 import mockConsole from 'jest-mock-console'
 import { ENTITY_IDENTIFIER } from '../lib/constants/identifier'
 import { useTwitchUser } from '../lib/hooks'
-import { getErrorMessage } from '../lib/utils/error'
-import { renderHookWithMockTwitchContext } from './utils/render-with-twitch'
+import { getErrorMessage } from '../lib/utils'
+import { renderHookWithMockTwitchContext } from './utils'
 import {
   TWITCH_INTERNAL_SERVER_ERROR_RESPONSE,
   TWITCH_INVALID_CLIENT_ID,

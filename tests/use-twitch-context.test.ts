@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks'
 import mockConsole from 'jest-mock-console'
 import { useTwitchContext } from '../lib/context/use-twitch-context'
-import { getErrorMessage } from '../lib/utils/error'
-import { renderHookWithMockTwitchContext } from './utils/render-with-twitch'
+import { getErrorMessage } from '../lib/utils'
+import { renderHookWithMockTwitchContext } from './utils'
 
 describe('useTwitchContext', () => {
   it('should throw if used outside a Twitch provider', () => {

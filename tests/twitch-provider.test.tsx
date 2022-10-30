@@ -1,7 +1,7 @@
 import type { RestoreConsole } from 'jest-mock-console'
 import mockConsole from 'jest-mock-console'
 import React from 'react'
-import { renderWithMockTwitchContext } from './utils/render-with-twitch'
+import { renderWithMockTwitchContext } from './utils'
 import { redirectForToken } from './__mocks__/provider'
 
 describe('TwitchProvider', () => {
