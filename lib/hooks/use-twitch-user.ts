@@ -1,6 +1,5 @@
-import type { TwitchUserHookReturn, UsersApiResponse } from '../@types'
-import { ENTITY_IDENTIFIER } from '../constants/identifier'
-import { TWITCH_API_USERS_ENDPOINT } from '../constants/twitch-api'
+import { ENTITY_IDENTIFIER, TWITCH_API_USERS_ENDPOINT } from '../constants'
+import type { TwitchUserHookReturn, UsersApiResponse } from '../types'
 import { safelyValidateUserData, UnexpectedTwitchDataError } from '../utils'
 import { useTwitchApi } from './use-twitch-api'
 

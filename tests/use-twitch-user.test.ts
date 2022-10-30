@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks'
 import mockConsole from 'jest-mock-console'
-import { ENTITY_IDENTIFIER } from '../lib/constants/identifier'
+import { ENTITY_IDENTIFIER } from '../lib/constants'
 import { useTwitchUser } from '../lib/hooks'
 import { getErrorMessage } from '../lib/utils'
 import { renderHookWithMockTwitchContext } from './utils'

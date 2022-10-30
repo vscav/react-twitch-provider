@@ -1,8 +1,8 @@
 import type { Fetcher } from 'swr'
 import useSWR from 'swr'
-import type { nullableString, TwitchHookFetcherReturn } from '../@types'
 import { REQUEST_INIT, TWITCH_API_BASE_URL } from '../constants'
 import { useTwitchContext } from '../context/use-twitch-context'
+import type { nullableString, TwitchHookFetcherReturn } from '../types'
 import { FetcherError, generateError } from '../utils'
 
 async function twitchApiFetcher<FetcherResponse>(url: string, headers: HeadersInit): Promise<FetcherResponse> {

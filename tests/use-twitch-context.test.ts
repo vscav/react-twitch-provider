@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks'
 import mockConsole from 'jest-mock-console'
-import { useTwitchContext } from '../lib/context/use-twitch-context'
+import { useTwitchContext } from '../lib/context'
 import { getErrorMessage } from '../lib/utils'
 import { renderHookWithMockTwitchContext } from './utils'
 

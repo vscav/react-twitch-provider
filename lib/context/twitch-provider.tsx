@@ -1,5 +1,5 @@
 import React from 'react'
-import { TOKEN_PARAM_IDENTIFIER } from '../constants/twitch-api'
+import { TOKEN_PARAM_IDENTIFIER } from '../constants'
 import { redirectForToken, throwOnInvalidClientIdentifier, throwOnInvalidRedirectUri } from '../utils'
 import { TwitchContext } from './twitch-context'
 

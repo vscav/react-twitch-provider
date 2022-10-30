@@ -1,4 +1,4 @@
-import { User } from '../@types'
+import { User } from '../types'
 
 function safelyValidateUserData(maybeUserData: unknown) {
   const { success: isUserDataValid } = User.safeParse(maybeUserData)

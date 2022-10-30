@@ -2,9 +2,9 @@
   "name": "react-twitch-provider",
   "version": "0.1.0",
   "description": "A Twitch provider to easily access your Twitch account.",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/esm/index.d.ts",
+  "main": "./build/cjs/index.js",
+  "module": "./build/esm/index.js",
+  "types": "./build/esm/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vscav/react-twitch-provider.git"
@@ -12,7 +12,7 @@
   "scripts": {
     "build": "yarn build:esm && yarn build:cjs",
     "build:esm": "tsc",
-    "build:cjs": "tsc --module commonjs --outDir dist/cjs",
+    "build:cjs": "tsc --module commonjs --outDir build/cjs",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "eslint .",
@@ -26,7 +26,7 @@
     "react": ">=16"
   },
   "files": [
-    "dist",
+    "build",
     "LICENSE",
     "README.md"
   ],

@@ -13,8 +13,8 @@ export default async (): Promise<Config> => {
       '^@hooks/(.*)$': '<rootDir>/lib/hooks/$1',
       '^@utils/(.*)$': '<rootDir>/lib/utils/$1',
     },
-    transformIgnorePatterns: ['<rootDir>/dist/', '<rootDir>/node_modules/'],
-    coveragePathIgnorePatterns: ['/node_modules/', '/dist/', '/test/'],
+    transformIgnorePatterns: ['<rootDir>/build/', '<rootDir>/node_modules/'],
+    coveragePathIgnorePatterns: ['/node_modules/', '/build/', '/tests/'],
     coverageReporters: ['text', 'html'],
   }
 }

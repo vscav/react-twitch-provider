@@ -1,11 +1,9 @@
 {
   "include": [
     "lib",
-    "tests/utils/mock-twitch-provider.tsx",
-    "tests/utils/console.ts"
   ],
   "exclude": [
-    "dist",
+    "build",
     "node_modules",
     "tests"
   ],
@@ -23,7 +21,7 @@
     "declaration": true,
     "sourceMap": true,
     "rootDir": "lib",
-    "outDir": "./dist/esm",
+    "outDir": "./build/esm",
     "strict": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,

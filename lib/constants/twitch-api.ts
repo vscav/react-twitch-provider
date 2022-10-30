@@ -1,4 +1,4 @@
-import type { CustomRequestInit } from '../@types'
+import type { CustomRequestInit } from '../types'
 
 const REQUIRED_TWITCH_SCOPES = ['user:read:email']
 const BASE_REDIRECT_PARAMETERS = {

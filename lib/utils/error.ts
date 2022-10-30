@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { HTTP_STATUS_MAP } from '../constants/error'
+import { HTTP_STATUS_MAP } from '../constants'
 import { isEmptyString, isString } from './string'
 import { isUrl } from './url'
 

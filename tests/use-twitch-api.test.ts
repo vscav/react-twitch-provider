@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks'
 import mockConsole from 'jest-mock-console'
-import { useTwitchApi } from '../lib/hooks/use-twitch-api'
-import type { UsersApiResponse } from '../lib/hooks/use-twitch-user'
+import { useTwitchApi } from '../lib/hooks'
+import type { UsersApiResponse } from '../lib/types'
 import { getErrorMessage } from '../lib/utils'
 import { renderHookWithMockTwitchContext } from './utils'
 import {

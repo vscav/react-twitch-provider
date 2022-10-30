@@ -1,6 +1,5 @@
 import React from 'react'
-import { TwitchContext } from '../../lib/context/twitch-context'
-import { TwitchProviderOptions, TwitchProviderProps } from '../../lib/context/twitch-provider'
+import { TwitchContext, TwitchProviderOptions, TwitchProviderProps } from '../../lib/context'
 import { throwOnInvalidClientIdentifier, throwOnInvalidRedirectUri } from '../../lib/utils'
 import * as apiUtilsModule from '../../lib/utils/api'
 
