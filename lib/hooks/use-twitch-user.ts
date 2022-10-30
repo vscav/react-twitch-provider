@@ -79,10 +79,6 @@ function safelyValidateUserData(maybeUserData: unknown) {
 
 /**
  * Retrieve the logged in user data from the Twitch API.
- * The response received can result in an error or the expected user data.
- * While the promise is not yet resolved, the hook will return a loading state.
- *
- * The response is cached by default for 10 seconds.
  *
  * See the [Twitch API endpoint documentation](https://dev.twitch.tv/docs/api/reference#get-users) for more information.
  */
@@ -92,10 +88,10 @@ function useTwitchUser(): TwitchUserHookReturn {
   const needsDataValidation = data && !isValidating && !error
   const isLoading = !error && !data
 
-  const [userData] = data?.data || []
+  const [currentUser] = data?.data || []
 
   if (needsDataValidation) {
-    const isUserDataValid = safelyValidateUserData(userData)
+    const isUserDataValid = safelyValidateUserData(currentUser)
     if (!isUserDataValid) {
       return {
         error: new UnexpectedTwitchDataError(ENTITY_IDENTIFIER.USER),
@@ -105,7 +101,7 @@ function useTwitchUser(): TwitchUserHookReturn {
     }
   }
 
-  return { data: userData, error, isValidating, isLoading }
+  return { data: currentUser, error, isValidating, isLoading }
 }
 
 export type { UsersApiResponse }

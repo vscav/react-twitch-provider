@@ -39,7 +39,7 @@ describe('useTwitchApi', () => {
   })
 
   it('should return a 401 error on an invalid Twitch OAuth token', async () => {
-    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchApi(''), {
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchApi('users'), {
       accessToken: TWITCH_INVALID_OAUTH_TOKEN,
     })
 
@@ -57,7 +57,7 @@ describe('useTwitchApi', () => {
   })
 
   it('should return a 401 error on an invalid Twitch client identifier', async () => {
-    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchApi(''), {
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchApi('users'), {
       clientId: TWITCH_INVALID_CLIENT_ID,
     })
 
