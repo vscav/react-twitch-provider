@@ -15,6 +15,7 @@ const REQUEST_INIT: CustomRequestInit = {
 const TOKEN_PARAM_IDENTIFIER = 'access_token'
 
 const TWITCH_API_BASE_URL = 'https://api.twitch.tv/helix'
+const TWITCH_API_CHEERMOTES_ENDPOINT = 'bits/cheermotes'
 const TWITCH_API_USERS_ENDPOINT = 'users'
 
 export {
@@ -22,5 +23,6 @@ export {
   REQUEST_INIT,
   TOKEN_PARAM_IDENTIFIER,
   TWITCH_API_BASE_URL,
+  TWITCH_API_CHEERMOTES_ENDPOINT,
   TWITCH_API_USERS_ENDPOINT,
 }

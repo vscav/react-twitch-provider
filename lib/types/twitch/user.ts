@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { TwitchApiDataResponse, TwitchHookBaseReturn } from './common'
+import { TwitchApiDataResponse, TwitchHookBaseReturn } from '../common'
 
 const User = z.object({
   /**
