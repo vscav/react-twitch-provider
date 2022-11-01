@@ -110,4 +110,4 @@ type TwitchCheermotesHookReturn = TwitchHookBaseReturn & {
 }
 
 export type { TwitchCheermotesHookReturn, CheermotesApiResponse }
-export { Cheermotes }
+export { Cheermote, Cheermotes }

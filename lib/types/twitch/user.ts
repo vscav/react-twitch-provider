@@ -60,7 +60,9 @@ const User = z.object({
 
 type User = z.infer<typeof User>
 
-type Users = User[]
+const Users = z.array(User)
+
+type Users = z.infer<typeof Users>
 
 type UsersApiResponse = TwitchApiDataResponse<Users>
 
@@ -69,4 +71,4 @@ type TwitchUserHookReturn = TwitchHookBaseReturn & {
 }
 
 export type { TwitchUserHookReturn, UsersApiResponse }
-export { User }
+export { User, Users }

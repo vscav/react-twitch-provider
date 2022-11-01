@@ -1,4 +1,9 @@
-import { BASE_REDIRECT_PARAMETERS } from '../constants'
+import { BASE_REDIRECT_PARAMETERS, TWITCH_API_BASE_URL } from '../constants'
+import { nullableString } from '../types'
+
+function createApiUrl(endpoint: nullableString) {
+  return `${TWITCH_API_BASE_URL}/${endpoint}`
+}
 
 function redirectForToken(clientId: string, redirectUri: string) {
   const oauthParamaters = new URLSearchParams({
@@ -11,4 +16,4 @@ function redirectForToken(clientId: string, redirectUri: string) {
   window.location.replace(oauthUrl)
 }
 
-export { redirectForToken }
+export { createApiUrl, redirectForToken }

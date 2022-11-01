@@ -25,7 +25,7 @@ describe('useTwitchUser', () => {
     restoreConsole()
   })
 
-  it('should return a 200 response with data when using an existing Twitch API endpoint', async () => {
+  it('should return a 200 response with data', async () => {
     const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchUser())
 
     expect(result.current.isValidating).toBeTruthy()

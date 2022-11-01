@@ -4,7 +4,7 @@ import { safelyValidateUserData, UnexpectedTwitchDataError } from '../utils'
 import { useTwitchApi } from './use-twitch-api'
 
 /**
- * Retrieve the current logged in user data from the Twitch API.
+ * Retrieves the current logged in user data from the Twitch API.
  *
  * See the [Twitch API endpoint documentation](https://dev.twitch.tv/docs/api/reference#get-users) for more information.
  *

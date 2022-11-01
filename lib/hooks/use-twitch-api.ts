@@ -1,12 +1,12 @@
 import type { Fetcher } from 'swr'
 import useSWR from 'swr'
-import { REQUEST_INIT, TWITCH_API_BASE_URL } from '../constants'
+import { REQUEST_INIT } from '../constants'
 import { useTwitchContext } from '../context'
 import type { nullableString, TwitchHookFetcherReturn } from '../types'
-import { FetcherError, generateError } from '../utils'
+import { createApiUrl, FetcherError, generateError } from '../utils'
 
 /**
- * The fetcher method used to perform `GET` requests on the Twitch API.
+ * Fetcher method used to perform `GET` requests on the Twitch API.
  *
  * @param {String} url The URL to fetch
  * @param {HeadersInit} headers The headers to send with the request
@@ -20,7 +20,7 @@ async function twitchApiFetcher<FetcherResponse>(url: string, headers: HeadersIn
 }
 
 /**
- * Hook that acts as a wrapper around the `useSWR` to perform `GET` requests on the Twitch API.
+ * Acts as a wrapper around the `useSWR` to perform `GET` requests on the Twitch API.
  * It prepares the request headers by adding credentials in order to authorize the user.
  *
  * @param {string|null} endpoint The Twitch API endpoint to access/fetch
@@ -29,7 +29,7 @@ async function twitchApiFetcher<FetcherResponse>(url: string, headers: HeadersIn
 function useTwitchApi<EntityDataType>(endpoint: nullableString): TwitchHookFetcherReturn<EntityDataType> {
   const { accessToken, clientId } = useTwitchContext()
 
-  const path = `${TWITCH_API_BASE_URL}/${endpoint}`
+  const path = createApiUrl(endpoint)
   const headers = {
     'client-id': clientId,
     authorization: `Bearer ${accessToken}`,
