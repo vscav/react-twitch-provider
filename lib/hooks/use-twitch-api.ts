@@ -29,15 +29,15 @@ async function twitchApiFetcher<FetcherResponse>(url: string, headers: HeadersIn
 function useTwitchApi<EntityDataType>(endpoint: nullableString): TwitchHookFetcherReturn<EntityDataType> {
   const { accessToken, clientId } = useTwitchContext()
 
-  const path = createApiUrl(endpoint)
+  const url = createApiUrl(endpoint)
   const headers = {
     'client-id': clientId,
     authorization: `Bearer ${accessToken}`,
   }
 
-  const fetcher: Fetcher<EntityDataType, string> = () => twitchApiFetcher<EntityDataType>(path, headers)
+  const fetcher: Fetcher<EntityDataType, string> = () => twitchApiFetcher<EntityDataType>(url, headers)
 
-  return useSWR<EntityDataType, FetcherError>(() => (endpoint ? path : null), fetcher, {
+  return useSWR<EntityDataType, FetcherError>(() => (endpoint ? url : null), fetcher, {
     shouldRetryOnError: false,
     refreshInterval: 10000,
   })
