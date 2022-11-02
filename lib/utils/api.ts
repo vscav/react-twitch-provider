@@ -1,19 +1,26 @@
-import { BASE_REDIRECT_PARAMETERS, TWITCH_API_BASE_URL } from '../constants'
+import { BASE_REDIRECT_PARAMETERS, TWITCH_API_AUTHORIZATION_URL, TWITCH_API_BASE_URL } from '../constants'
 import { nullableString } from '../types'
 
-function createApiUrl(endpoint: nullableString) {
+function createApiUrl(endpoint: nullableString): string {
   return `${TWITCH_API_BASE_URL}/${endpoint}`
 }
 
-function redirectForToken(clientId: string, redirectUri: string) {
+function createApiEndpoint(endpoint: nullableString, queryParams: Record<string, string>): string {
+  const hasQueryParameters = Object.keys(queryParams).length !== 0
+  const queryParameters = new URLSearchParams(queryParams)
+
+  return hasQueryParameters ? `${endpoint}?${queryParameters}` : (endpoint as string)
+}
+
+function redirectForToken(clientId: string, redirectUri: string): void {
   const oauthParamaters = new URLSearchParams({
     ...BASE_REDIRECT_PARAMETERS,
     client_id: clientId,
     redirect_uri: redirectUri,
   })
-  const oauthUrl = `https://id.twitch.tv/oauth2/authorize?${oauthParamaters}`
+  const oauthUrl = `${TWITCH_API_AUTHORIZATION_URL}?${oauthParamaters}`
 
   window.location.replace(oauthUrl)
 }
 
-export { createApiUrl, redirectForToken }
+export { createApiEndpoint, createApiUrl, redirectForToken }
