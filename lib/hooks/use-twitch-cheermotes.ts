@@ -13,9 +13,16 @@ import { useTwitchApi } from './use-twitch-api'
  * @returns {TwitchCheermotesHookReturn}
  */
 function useTwitchCheermotes(broadcasterId?: string): TwitchCheermotesHookReturn {
-  const path = createApiEndpoint(TWITCH_API_CHEERMOTES_ENDPOINT, {
-    ...(broadcasterId && { broadcaster_id: broadcasterId }),
-  })
+  const isBroadcasterIdSpecified = arguments.length
+  const isBroadcasterIdDefined = isBroadcasterIdSpecified && broadcasterId
+
+  let path = null
+
+  if (!isBroadcasterIdSpecified || isBroadcasterIdDefined) {
+    path = createApiEndpoint(TWITCH_API_CHEERMOTES_ENDPOINT, {
+      ...(isBroadcasterIdDefined && { broadcaster_id: broadcasterId }),
+    })
+  }
 
   const { data, error, isValidating } = useTwitchApi<CheermotesApiResponse>(path)
 

@@ -42,7 +42,7 @@ describe('useTwitchCheermotes', () => {
     expect(result.current.data).toEqual(TWITCH_CHEERMOTES_DATA)
   })
 
-  it('should return a 200 response with data when specifying a broadcaster identifier', async () => {
+  it('should return a 200 response with data when passing a broadcaster identifier', async () => {
     const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchCheermotes('123456789'))
 
     expect(result.current.isValidating).toBeTruthy()
@@ -56,6 +56,12 @@ describe('useTwitchCheermotes', () => {
     expect(result.current.isLoading).toBeFalsy()
     expect(result.current.error).toBeUndefined()
     expect(result.current.data).toEqual(TWITCH_BROADCASTER_CHEERMOTES_DATA)
+  })
+
+  it('should be in idle state when passing an undefined broadcaster identifier', async () => {
+    const { result } = renderHookWithMockTwitchContext(() => useTwitchCheermotes(undefined))
+
+    expect(result.current.isValidating).toBeFalsy()
   })
 
   it('should return a 200 response even if the received data is an empty Cheermotes array', async () => {
