@@ -1,4 +1,4 @@
-import { TWITCH_API_CHEERMOTES_ENDPOINT, TWITCH_API_USERS_ENDPOINT } from '../../lib/constants/twitch-api'
+import { TWITCH_API_CHEERMOTES_ENDPOINT, TWITCH_API_USERS_ENDPOINT } from '../../lib/constants'
 import { createApiUrl } from '../../lib/utils'
 
 const CHEERMOTES_PATH = createApiUrl(TWITCH_API_CHEERMOTES_ENDPOINT)

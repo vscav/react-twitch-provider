@@ -18,6 +18,7 @@ const TWITCH_API_AUTHORIZATION_URL = 'https://id.twitch.tv/oauth2/authorize'
 const TWITCH_API_BASE_URL = 'https://api.twitch.tv/helix'
 
 const TWITCH_API_CHEERMOTES_ENDPOINT = 'bits/cheermotes'
+const TWITCH_API_TOP_GAMES_ENDPOINT = `games/top`
 const TWITCH_API_USERS_ENDPOINT = 'users'
 
 export {
@@ -27,5 +28,6 @@ export {
   TWITCH_API_AUTHORIZATION_URL,
   TWITCH_API_BASE_URL,
   TWITCH_API_CHEERMOTES_ENDPOINT,
+  TWITCH_API_TOP_GAMES_ENDPOINT,
   TWITCH_API_USERS_ENDPOINT,
 }

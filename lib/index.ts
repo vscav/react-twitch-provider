@@ -1,2 +1,2 @@
 export { TwitchProvider as default } from './context'
-export { useTwitchCheermotes, useTwitchUser } from './hooks'
+export { useTwitchCheermotes, useTwitchTopGames, useTwitchUser } from './hooks'

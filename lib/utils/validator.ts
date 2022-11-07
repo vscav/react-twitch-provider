@@ -1,8 +1,13 @@
-import { Cheermotes, User } from '../types'
+import { Cheermotes, Games, User } from '../types'
 
 function safelyValidateCheermotesData(maybeCheermotesData: unknown) {
   const { success: areCheermotesDataValid } = Cheermotes.safeParse(maybeCheermotesData)
   return areCheermotesDataValid
+}
+
+function safelyValidateGamesData(maybeGamesData: unknown) {
+  const { success: areGamesDataValid } = Games.safeParse(maybeGamesData)
+  return areGamesDataValid
 }
 
 function safelyValidateUserData(maybeUserData: unknown) {
@@ -10,4 +15,4 @@ function safelyValidateUserData(maybeUserData: unknown) {
   return isUserDataValid
 }
 
-export { safelyValidateCheermotesData, safelyValidateUserData }
+export { safelyValidateCheermotesData, safelyValidateGamesData, safelyValidateUserData }
