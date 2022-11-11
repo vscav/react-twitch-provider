@@ -15,6 +15,7 @@
     "build:cjs": "tsc --module commonjs --outDir build/cjs",
     "test": "jest",
     "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "prettier": "prettier --check .",

@@ -33,5 +33,5 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
   },
-  "extends": "./tsconfig.aliases.json"
+  // "extends": "./tsconfig.aliases.json"
 }

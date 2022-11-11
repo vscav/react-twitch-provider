@@ -12,6 +12,12 @@ function createApiEndpoint(endpoint: nullableString, queryParams: Record<string,
   return hasQueryParameters ? `${endpoint}?${queryParameters}` : (endpoint as string)
 }
 
+/* istanbul ignore next */
+
+/**
+ * This function is ignored from test coverage because it is only used by
+ * the Twitch provider, which is mocked in tests and ignored from coverage as well.
+ */
 function redirectForToken(clientId: string, redirectUri: string): void {
   const oauthParamaters = new URLSearchParams({
     ...BASE_REDIRECT_PARAMETERS,

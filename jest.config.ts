@@ -7,14 +7,16 @@ export default async (): Promise<Config> => {
     testRegex: '/tests/.*\\.test\\.tsx?$',
     // modulePathIgnorePatterns: ['<rootDir>/examples/'],
     setupFilesAfterEnv: ['<rootDir>/tests/jest.setup.ts'],
-    moduleNameMapper: {
-      '^@constants/(.*)$': '<rootDir>/lib/constants/$1',
-      '^@context/(.*)$': '<rootDir>/lib/context/$1',
-      '^@hooks/(.*)$': '<rootDir>/lib/hooks/$1',
-      '^@utils/(.*)$': '<rootDir>/lib/utils/$1',
-    },
+    // moduleNameMapper: {
+    //   '^@constants/(.*)$': '<rootDir>/lib/constants/$1',
+    //   '^@context/(.*)$': '<rootDir>/lib/context/$1',
+    //   '^@hooks/(.*)$': '<rootDir>/lib/hooks/$1',
+    //   '^@utils/(.*)$': '<rootDir>/lib/utils/$1',
+    // },
     transformIgnorePatterns: ['<rootDir>/build/', '<rootDir>/node_modules/'],
-    coveragePathIgnorePatterns: ['/node_modules/', '/build/', '/tests/'],
+    collectCoverageFrom: ['lib/**/*.{ts,tsx}'],
+    // The `twitch-provider.tsx` file is ignored from test coverage because the provider is mocked in tests.
+    coveragePathIgnorePatterns: ['/node_modules/', '/build/', '/tests/', '/lib/context/twitch-provider.tsx'],
     coverageReporters: ['text', 'html'],
   }
 }
