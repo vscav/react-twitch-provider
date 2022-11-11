@@ -5,13 +5,11 @@ import { useTwitchCheermotes } from '../lib/hooks'
 import { getErrorMessage } from '../lib/utils'
 import { renderHookWithMockTwitchContext } from './utils'
 import {
-  TWITCH_BROADCASTER_CHEERMOTES_DATA,
-  TWITCH_CHEERMOTES_DATA,
   TWITCH_INTERNAL_SERVER_ERROR_RESPONSE,
   TWITCH_INVALID_CLIENT_ID,
   TWITCH_INVALID_OAUTH_TOKEN,
-  UNEXPECTED_TWITCH_CHEERMOTES_DATA,
 } from './__mocks__/fixtures'
+import * as cheermotesDb from './__mocks__/fixtures/data/cheermotes'
 import { CHEERMOTES_PATH } from './__mocks__/paths'
 import { rest, server } from './__mocks__/server'
 
@@ -39,7 +37,7 @@ describe('useTwitchCheermotes', () => {
     expect(result.current.isValidating).toBeFalsy()
     expect(result.current.isLoading).toBeFalsy()
     expect(result.current.error).toBeUndefined()
-    expect(result.current.data).toEqual(TWITCH_CHEERMOTES_DATA)
+    expect(result.current.data).toBeDefined()
   })
 
   it('should return a 200 response with data when passing a broadcaster identifier', async () => {
@@ -55,7 +53,7 @@ describe('useTwitchCheermotes', () => {
     expect(result.current.isValidating).toBeFalsy()
     expect(result.current.isLoading).toBeFalsy()
     expect(result.current.error).toBeUndefined()
-    expect(result.current.data).toEqual(TWITCH_BROADCASTER_CHEERMOTES_DATA)
+    expect(result.current.data).toBeDefined()
   })
 
   it('should be in idle state when passing an undefined broadcaster identifier', async () => {
@@ -134,10 +132,13 @@ describe('useTwitchCheermotes', () => {
   it('should return a 422 error on unexpected/malformed Cheermotes data received from the Twitch API', async () => {
     server.use(
       rest.get(CHEERMOTES_PATH, (_, response, context) => {
+        const cheermotes = cheermotesDb.getAll()
+        const malformedCheermotes = cheermotes.map((cheermote) => ({ ...cheermote, created_at: 'Unexpected property' }))
+
         return response(
           context.status(200),
           context.json({
-            data: UNEXPECTED_TWITCH_CHEERMOTES_DATA,
+            data: malformedCheermotes,
           }),
         )
       }),

@@ -8,9 +8,8 @@ import {
   TWITCH_INTERNAL_SERVER_ERROR_RESPONSE,
   TWITCH_INVALID_CLIENT_ID,
   TWITCH_INVALID_OAUTH_TOKEN,
-  TWITCH_USER_DATA,
-  UNEXPECTED_TWITCH_USER_DATA,
 } from './__mocks__/fixtures'
+import * as usersDb from './__mocks__/fixtures/data/users'
 import { USERS_PATH } from './__mocks__/paths'
 import { rest, server } from './__mocks__/server'
 
@@ -38,7 +37,7 @@ describe('useTwitchUser', () => {
     expect(result.current.isValidating).toBeFalsy()
     expect(result.current.isLoading).toBeFalsy()
     expect(result.current.error).toBeUndefined()
-    expect(result.current.data).toEqual(TWITCH_USER_DATA)
+    expect(result.current.data).toBeDefined()
   })
 
   it('should return a 401 error on an invalid Twitch OAuth token', async () => {
@@ -84,10 +83,13 @@ describe('useTwitchUser', () => {
   it('should return a 422 error on unexpected/malformed user data received from the Twitch API', async () => {
     server.use(
       rest.get(USERS_PATH, (_, response, context) => {
+        const users = usersDb.getAll()
+        const malformedUsers = users.map((user) => ({ ...user, updated_at: 'Unexpected property' }))
+
         return response(
           context.status(200),
           context.json({
-            data: [UNEXPECTED_TWITCH_USER_DATA],
+            data: malformedUsers,
           }),
         )
       }),

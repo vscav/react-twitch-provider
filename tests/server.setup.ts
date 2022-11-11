@@ -1,4 +1,5 @@
 import 'whatwg-fetch'
+import { resetDb } from './__mocks__/db'
 import { server } from './__mocks__/server'
 
 beforeAll(() =>
@@ -11,6 +12,9 @@ beforeAll(() =>
   }),
 )
 
-afterEach(() => server.resetHandlers())
+afterEach(() => {
+  resetDb()
+  server.resetHandlers()
+})
 
 afterAll(() => server.close())

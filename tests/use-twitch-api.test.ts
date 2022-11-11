@@ -8,7 +8,6 @@ import {
   TWITCH_INTERNAL_SERVER_ERROR_RESPONSE,
   TWITCH_INVALID_CLIENT_ID,
   TWITCH_INVALID_OAUTH_TOKEN,
-  TWITCH_USERS_DATA,
 } from './__mocks__/fixtures'
 import { USERS_PATH } from './__mocks__/paths'
 import { rest, server } from './__mocks__/server'
@@ -35,7 +34,7 @@ describe('useTwitchApi', () => {
 
     expect(result.current.isValidating).toBeFalsy()
     expect(result.current.error).toBeUndefined()
-    expect(result.current.data).toEqual({ data: TWITCH_USERS_DATA })
+    expect(result.current.data).toBeDefined()
   })
 
   it('should not performed the request with a null parameter', async () => {
