@@ -8,7 +8,7 @@ import { createApiUrl, FetcherError, generateError } from '../utils'
 /**
  * Fetcher method used to perform `GET` requests on the Twitch API.
  *
- * @param {String} url The URL to fetch
+ * @param {string} url The URL to fetch
  * @param {HeadersInit} headers The headers to send with the request
  * @returns {Promise<FetcherResponse>} The response data
  */
@@ -23,7 +23,7 @@ async function twitchApiFetcher<FetcherResponse>(url: string, headers: HeadersIn
  * Acts as a wrapper around the `useSWR` to perform `GET` requests on the Twitch API.
  * It prepares the request headers by adding credentials in order to authorize the user.
  *
- * @param {string|null} endpoint The Twitch API endpoint to access/fetch
+ * @param {?string} endpoint The Twitch API endpoint to access/fetch
  * @returns {TwitchHookFetcherReturn}
  */
 function useTwitchApi<EntityDataType>(endpoint: nullableString): TwitchHookFetcherReturn<EntityDataType> {
