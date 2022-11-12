@@ -1,6 +1,6 @@
 import { isEmptyString, isString } from './string'
 
-function isUrl(value: any) {
+function isUrl(value: unknown): value is string {
   let res = false
 
   if (isString(value) && !isEmptyString(value)) {

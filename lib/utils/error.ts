@@ -45,7 +45,7 @@ class UnexpectedTwitchPaginationError extends FetcherError {
   }
 }
 
-async function generateError(fetcherResponse: Response) {
+async function generateError(fetcherResponse: Response): Promise<FetcherError> {
   const genericErrorInformation = HTTP_STATUS_MAP.get(fetcherResponse.status)
 
   const name = genericErrorInformation?.name || 'Unknown error'
@@ -66,17 +66,17 @@ async function generateError(fetcherResponse: Response) {
   }
 }
 
-function getErrorMessage(error: unknown) {
+function getErrorMessage(error: unknown): string {
   if (error instanceof Error) return error.message
   return String(error)
 }
 
-function safelyValidateTwitchApiError(maybeTwitchApiError: unknown) {
+function safelyValidateTwitchApiError(maybeTwitchApiError: unknown): boolean {
   const { success: isTwitchApiError } = TwitchApiError.safeParse(maybeTwitchApiError)
   return isTwitchApiError
 }
 
-function throwOnInvalidClientIdentifier(clientId: unknown) {
+function throwOnInvalidClientIdentifier(clientId: unknown): void {
   const isClientIdValid = isString(clientId) && !isEmptyString(clientId)
 
   if (!isClientIdValid)
@@ -85,7 +85,7 @@ function throwOnInvalidClientIdentifier(clientId: unknown) {
     )
 }
 
-function throwOnInvalidRedirectUri(redirectUri: unknown) {
+function throwOnInvalidRedirectUri(redirectUri: unknown): void {
   const isRedirectUriValid = isUrl(redirectUri)
 
   if (!isRedirectUriValid)
