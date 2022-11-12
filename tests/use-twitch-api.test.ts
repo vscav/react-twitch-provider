@@ -37,7 +37,7 @@ describe('useTwitchApi', () => {
     expect(result.current.data).toBeDefined()
   })
 
-  it('should not performed the request with a null parameter', async () => {
+  it('should not perform the request with a null parameter', async () => {
     const { result } = renderHookWithMockTwitchContext(() => useTwitchApi(null))
 
     expect(result.current.isValidating).toBeFalsy()

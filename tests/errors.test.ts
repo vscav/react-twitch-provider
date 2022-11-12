@@ -8,7 +8,7 @@ describe('Errors', () => {
       expect(error).toBeInstanceOf(FetcherError)
     })
 
-    it('should handled unexpected http error response', async () => {
+    it('should handle unexpected http error response', async () => {
       const httpResponse = new Response(null, { status: 428 })
       const error = await generateError(httpResponse)
 
@@ -17,7 +17,7 @@ describe('Errors', () => {
       expect(error.message).toBe("Couldn't obtain more details about the error")
     })
 
-    it('should handled expected http error response', async () => {
+    it('should handle expected http error response', async () => {
       const httpResponse = new Response(null, { status: 404 })
       const error = await generateError(httpResponse)
 
