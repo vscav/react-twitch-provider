@@ -1,4 +1,5 @@
 export * from './common'
+export * from './range'
 export * from './request'
 export * from './twitch'
 export * from './utils'

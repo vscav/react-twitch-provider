@@ -6,7 +6,7 @@ export default async (): Promise<Config> => {
     testEnvironment: 'jsdom',
     testRegex: '/tests/.*\\.test\\.tsx?$',
     // modulePathIgnorePatterns: ['<rootDir>/examples/'],
-    setupFilesAfterEnv: ['<rootDir>/tests/jest.setup.ts'],
+    setupFilesAfterEnv: ['<rootDir>/tests/setup/jest.setup.ts'],
     // moduleNameMapper: {
     //   '^@constants/(.*)$': '<rootDir>/lib/constants/$1',
     //   '^@context/(.*)$': '<rootDir>/lib/context/$1',

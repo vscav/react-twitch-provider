@@ -1,5 +1,5 @@
 import { ENTITY_IDENTIFIER, TWITCH_API_TOP_GAMES_ENDPOINT } from '../constants'
-import type { GamesApiResponse, TwitchGamesHookReturn } from '../types'
+import type { GamesApiResponse, Range, TwitchGamesHookReturn } from '../types'
 import { createApiEndpoint, safelyValidateGamesData, UnexpectedTwitchDataError } from '../utils'
 import { useTwitchApi } from './use-twitch-api'
 
@@ -17,9 +17,9 @@ interface TwitchTopGamesQueryParams {
   before?: string
 
   /**
-   * Maximum number of objects to return. Maximum: 100. Default: 20.
+   * Maximum number of objects to return. Minimum: 1. Maximum: 100. Default: 20.
    */
-  first?: number
+  first?: Range<1, 101>
 }
 
 /**
