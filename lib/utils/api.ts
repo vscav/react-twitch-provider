@@ -25,12 +25,12 @@ function createApiEndpoint(endpoint: nullableString, queryParams: Record<string,
   return hasQueryParameters ? `${endpoint}?${queryParameters}` : (endpoint as string)
 }
 
-/* istanbul ignore next */
-
 /**
- * This function is ignored from test coverage because it is only used by
+ * The following function is ignored from test coverage because it is only used by
  * the Twitch provider, which is mocked in tests and ignored from coverage as well.
  */
+
+/* istanbul ignore next */
 
 /**
  * Redirects the user to the Twitch authorization page to retrieve an access token.
