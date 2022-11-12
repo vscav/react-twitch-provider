@@ -1,9 +1,9 @@
 import type { SWRResponse } from 'swr'
 import type { FetcherError } from '../utils'
-import { Pagination } from './pagination'
+import { TPagination } from './pagination'
 
 type TwitchApiDataResponse<EntityType> = { data: EntityType }
-type TwitchApiPaginatedDataResponse<EntityType> = TwitchApiDataResponse<EntityType> & { pagination: Pagination }
+type TwitchApiPaginatedDataResponse<EntityType> = TwitchApiDataResponse<EntityType> & { pagination: TPagination }
 
 type TwitchHookBaseReturn = {
   error?: FetcherError

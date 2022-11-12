@@ -1,6 +1,12 @@
 import { ENTITY_IDENTIFIER, TWITCH_API_TOP_GAMES_ENDPOINT } from '../constants'
 import type { GamesApiResponse, Range, TwitchGamesHookReturn } from '../types'
-import { createApiEndpoint, safelyValidateGamesData, UnexpectedTwitchDataError } from '../utils'
+import {
+  createApiEndpoint,
+  safelyValidateGamesData,
+  safelyValidatePagination,
+  UnexpectedTwitchDataError,
+  UnexpectedTwitchPaginationError,
+} from '../utils'
 import { useTwitchApi } from './use-twitch-api'
 
 interface TwitchTopGamesQueryParams {
@@ -42,12 +48,22 @@ function useTwitchTopGames(queryParameters?: TwitchTopGamesQueryParams): TwitchG
   const isLoading = !error && !data
 
   const games = data?.data
+  const pagination = data?.pagination
 
   if (needsDataValidation) {
     const areGamesDataValid = safelyValidateGamesData(games)
     if (!areGamesDataValid) {
       return {
         error: new UnexpectedTwitchDataError(ENTITY_IDENTIFIER.GAME),
+        isValidating,
+        isLoading,
+      }
+    }
+
+    const isPaginationValid = safelyValidatePagination(pagination)
+    if (!isPaginationValid) {
+      return {
+        error: new UnexpectedTwitchPaginationError(),
         isValidating,
         isLoading,
       }

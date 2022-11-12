@@ -38,6 +38,7 @@ describe('useTwitchTopGames', () => {
     expect(result.current.isLoading).toBeFalsy()
     expect(result.current.error).toBeUndefined()
     expect(result.current.data).toBeDefined()
+
     expect(result.current.data?.data.length).toEqual(20)
   })
 
@@ -158,15 +159,14 @@ describe('useTwitchTopGames', () => {
         const topGames = gamesDb.getTop({
           first: 10,
         })
+
         const malformedTopGames = topGames.data.map((topGame) => ({ ...topGame, type: 'Unexpected property' }))
 
         return response(
           context.status(200),
           context.json({
-            data: {
-              data: malformedTopGames,
-              pagination: topGames.pagination,
-            },
+            data: malformedTopGames,
+            pagination: topGames.pagination,
           }),
         )
       }),
@@ -188,6 +188,47 @@ describe('useTwitchTopGames', () => {
     expect(result.current.error?.name).toBe('Unexpected Twitch data format')
     expect(result.current.error?.message).toBe(
       `The response received from the Twitch API does not respect the expected format for the ${ENTITY_IDENTIFIER.GAME} object. It might has been caused by breaking changes in the Twitch API that are not currently handled in the library.`,
+    )
+  })
+
+  it('should return a 422 error on unexpected/malformed Pagination object received from the Twitch API', async () => {
+    server.use(
+      rest.get(TOP_GAMES_PATH, (_, response, context) => {
+        const topGames = gamesDb.getTop({
+          first: 10,
+        })
+
+        const malformedPagination = {
+          offset: 'Unexpected property',
+          limit: 'Unexpected property',
+        }
+
+        return response(
+          context.status(200),
+          context.json({
+            data: topGames.data,
+            pagination: malformedPagination,
+          }),
+        )
+      }),
+    )
+
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchTopGames())
+
+    expect(result.current.isValidating).toBeTruthy()
+    expect(result.current.isLoading).toBeTruthy()
+    expect(result.current.error).toBeUndefined()
+    expect(result.current.data).toBeUndefined()
+
+    await waitForNextUpdate()
+
+    expect(result.current.isValidating).toBeFalsy()
+    expect(result.current.isLoading).toBeFalsy()
+
+    expect(result.current.error?.status).toBe(422)
+    expect(result.current.error?.name).toBe('Unexpected Twitch pagination format')
+    expect(result.current.error?.message).toBe(
+      'The response received from the Twitch API does not respect the expected format for the pagination object. It might has been caused by breaking changes in the Twitch API that are not currently handled in the library.',
     )
   })
 

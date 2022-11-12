@@ -4,11 +4,12 @@ const Pagination = z.object({
   cursor: z.string(),
 })
 
-type Pagination = z.infer<typeof Pagination>
+type TPagination = z.infer<typeof Pagination>
 
 type PaginatedData<DataType> = {
   data: DataType
-  pagination: Pagination
+  pagination: TPagination
 }
 
-export type { PaginatedData, Pagination }
+export type { PaginatedData, TPagination }
+export { Pagination }

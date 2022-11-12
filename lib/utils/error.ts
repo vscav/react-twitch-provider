@@ -35,6 +35,16 @@ class UnexpectedTwitchDataError extends FetcherError {
   }
 }
 
+class UnexpectedTwitchPaginationError extends FetcherError {
+  constructor() {
+    super(
+      'Unexpected Twitch pagination format',
+      422,
+      `The response received from the Twitch API does not respect the expected format for the pagination object. It might has been caused by breaking changes in the Twitch API that are not currently handled in the library.`,
+    )
+  }
+}
+
 async function generateError(fetcherResponse: Response) {
   const genericErrorInformation = HTTP_STATUS_MAP.get(fetcherResponse.status)
 
@@ -91,4 +101,5 @@ export {
   throwOnInvalidClientIdentifier,
   throwOnInvalidRedirectUri,
   UnexpectedTwitchDataError,
+  UnexpectedTwitchPaginationError,
 }
