@@ -1,4 +1,4 @@
-import { Users } from '../../../../lib/types'
+import { Users } from '../../../../../lib/types'
 
 const usersData: Users = [
   {

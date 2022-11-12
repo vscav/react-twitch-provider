@@ -1,4 +1,4 @@
-import { Cheermotes } from '../../../../lib/types'
+import { Cheermotes } from '../../../../../lib/types'
 
 const cheermotesData: Cheermotes = [
   {

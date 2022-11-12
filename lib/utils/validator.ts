@@ -1,4 +1,4 @@
-import { Cheermotes, Games, User } from '../types'
+import { Cheermotes, Games, TwitchApiError, User } from '../types'
 import { Pagination } from '../types/pagination'
 
 function safelyValidateCheermotesData(maybeCheermotesData: unknown): boolean {
@@ -16,9 +16,20 @@ function safelyValidatePagination(maybePagination: unknown): boolean {
   return isPaginationValid
 }
 
+function safelyValidateTwitchApiError(maybeTwitchApiError: unknown): boolean {
+  const { success: isTwitchApiError } = TwitchApiError.safeParse(maybeTwitchApiError)
+  return isTwitchApiError
+}
+
 function safelyValidateUserData(maybeUserData: unknown): boolean {
   const { success: isUserDataValid } = User.safeParse(maybeUserData)
   return isUserDataValid
 }
 
-export { safelyValidateCheermotesData, safelyValidateGamesData, safelyValidatePagination, safelyValidateUserData }
+export {
+  safelyValidateCheermotesData,
+  safelyValidateGamesData,
+  safelyValidatePagination,
+  safelyValidateTwitchApiError,
+  safelyValidateUserData,
+}

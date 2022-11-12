@@ -1,15 +1,7 @@
-import { z } from 'zod'
 import { HTTP_STATUS_MAP } from '../constants'
 import { isEmptyString, isString } from './string'
 import { isUrl } from './url'
-
-const TwitchApiError = z.object({
-  error: z.string(),
-  message: z.string(),
-  status: z.number(),
-})
-
-type TwitchApiError = z.infer<typeof TwitchApiError>
+import { safelyValidateTwitchApiError } from './validator'
 
 class FetcherError extends Error {
   name
@@ -45,6 +37,12 @@ class UnexpectedTwitchPaginationError extends FetcherError {
   }
 }
 
+/**
+ * Formats the provided error object into a custom FetcherError.
+ *
+ * @param {Response} fetcherResponse The response object returned by the fetcher in case of error
+ * @returns {Promise<FetcherError>} A promise of a custom fetcher error object
+ */
 async function generateError(fetcherResponse: Response): Promise<FetcherError> {
   const genericErrorInformation = HTTP_STATUS_MAP.get(fetcherResponse.status)
 
@@ -54,8 +52,7 @@ async function generateError(fetcherResponse: Response): Promise<FetcherError> {
   let message = genericErrorInformation?.message || "Couldn't obtain more details about the error"
 
   try {
-    // Try to parse the response because it may be a specific Twitch API error
-    // with a more relevant message
+    // Try to parse the response because it may be a specific Twitch API error with a more relevant message
     const parsedResponse = await fetcherResponse.json()
     const isTwitchApiError = safelyValidateTwitchApiError(parsedResponse)
 
@@ -66,16 +63,22 @@ async function generateError(fetcherResponse: Response): Promise<FetcherError> {
   }
 }
 
+/**
+ * Gets the error message from the provided error object.
+ *
+ * @param {?} error The error object from which to try getting the message
+ * @returns {string} An error message
+ */
 function getErrorMessage(error: unknown): string {
   if (error instanceof Error) return error.message
   return String(error)
 }
 
-function safelyValidateTwitchApiError(maybeTwitchApiError: unknown): boolean {
-  const { success: isTwitchApiError } = TwitchApiError.safeParse(maybeTwitchApiError)
-  return isTwitchApiError
-}
-
+/**
+ * Throws an error if the provided client ID is not valid.
+ *
+ * @param {?} clientId The client ID to validate.
+ */
 function throwOnInvalidClientIdentifier(clientId: unknown): void {
   const isClientIdValid = isString(clientId) && !isEmptyString(clientId)
 
@@ -85,6 +88,11 @@ function throwOnInvalidClientIdentifier(clientId: unknown): void {
     )
 }
 
+/**
+ * Throws an error if the provided URL is not valid.
+ *
+ * @param {?} redirectUri The redirect URI to validate.
+ */
 function throwOnInvalidRedirectUri(redirectUri: unknown): void {
   const isRedirectUriValid = isUrl(redirectUri)
 

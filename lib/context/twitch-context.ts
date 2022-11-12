@@ -5,6 +5,9 @@ type TwitchContextProps = {
   clientId: string
 }
 
+/**
+ * Context for the Twitch API. It provides the access token and client ID.
+ */
 const TwitchContext = React.createContext<TwitchContextProps | undefined>(undefined)
 
 export type { TwitchContextProps }

@@ -1,4 +1,4 @@
-import { Games } from '../../../../lib/types'
+import { Games } from '../../../../../lib/types'
 
 const gamesData: Games = [
   {
