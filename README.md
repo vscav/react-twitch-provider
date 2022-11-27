@@ -59,7 +59,7 @@ function Greeting() {
 
 export function App() {
   return (
-    <TwitchProvider clientId={yourClientId} redirectUri={YourRedirectUri}>
+    <TwitchProvider clientId={yourClientId} redirectUri={yourRedirectUri}>
       <Greeting />
     </TwitchProvider>
   )
@@ -72,7 +72,11 @@ This example will render your Twitch username into a container on the page.
 
 ### API
 
-Coming soon
+**Coming soon**: documentation for each available hook can be found in the [`/docs`](https://github.com/vscav/react-twitch-provider/tree/main/docs) folder.
+
+- `useTwitchCheermotes`
+- `useTwitchTopGames`
+- `useTwitchUser`
 
 ## Development
 
