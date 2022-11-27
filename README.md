@@ -6,9 +6,11 @@
     React provider and hooks set to retrieve Twitch account and global data
   </p>
 </p>
+
 <br/>
+
 <p align="center">
-<a href="https://opensource.org/licenses"><img alt="GitHub" src="https://img.shields.io/github/license/vscav/react-twitch-provider"></a>
+  <a href="https://opensource.org/licenses"><img alt="GitHub" src="https://img.shields.io/github/license/vscav/react-twitch-provider"></a>
 </p>
 
 <br />
@@ -17,9 +19,9 @@
 
 ### Register the application
 
-Follow the Twitch documentation to register an application.
+Follow the Twitch documentation to [register an application](https://dev.twitch.tv/docs/authentication/register-app).
 
-The goal is to obtain your client ID, which we’ll use to get your access token and to set the `Client-Id` header in all requests to the Twitch API.
+The goal is to obtain your client ID, which we’ll use to get your OAuth access token and to set the `Client-Id` header in all requests to the Twitch API.
 
 ### Environement file
 
@@ -45,7 +47,7 @@ Install the package with the package manager of your choice. With `yarn` you can
 
 ### Examples
 
-We have several examples in the [`/examples` folder]() of the repository. Here is a first basic one to get you started:
+We have several examples in the [`/examples`]() folder of the repository. Here is a first basic one to get you started:
 
 ```jsx
 import TwitchProvider, { useTwitchUser } from 'react-twitch-provider'
@@ -139,7 +141,7 @@ In a external React application that you've created, run
 
 It will copy the current version from the store to your dependent project's `.yalc` folder and inject a `file:.yalc/my-package dependency` into the `package.json`.
 
-> You can alternatively use one of the projects of the [`/examples` folder]() of the repository to use it as a template.
+> You can alternatively use one of the projects of the [`/examples`]() folder of the repository to use it as a template.
 
 ##### Update
 
