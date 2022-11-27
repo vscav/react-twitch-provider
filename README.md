@@ -53,29 +53,22 @@ We have several examples in the [`/examples`]() folder of the repository. Here i
 import TwitchProvider, { useTwitchUser } from 'react-twitch-provider'
 
 function Greeting() {
-  const { data } = useTwitchUser();
-  return (
-    <div>
-      {data && <>Welcome {data.display_name}</>}
-    </div>
-  );
+  const { data } = useTwitchUser()
+  return <div>{data && <>Welcome {data.display_name}</>}</div>
 }
 
 export function App() {
   return (
-    <TwitchProvider
-      clientId={process.env.REACT_APP_TWITCH_CLIENT_ID!}
-      redirectUri={process.env.REACT_APP_TWITCH_REDIRECT_URI!}
-    >
+    <TwitchProvider clientId={yourClientId} redirectUri={YourRedirectUri}>
       <Greeting />
     </TwitchProvider>
-  );
+  )
 }
 ```
 
 This example will render your Twitch username into a container on the page.
 
-> Make sure to follow the installation section to handle the client ID and redirect URI from Twitch.
+> Make sure to follow the [installation section](#register-the-application) to handle the client ID and OAuth redirect URI from Twitch.
 
 ### API
 
