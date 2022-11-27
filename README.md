@@ -47,7 +47,7 @@ Install the package with the package manager of your choice. With `yarn` you can
 
 ### Examples
 
-We have several examples in the [`/examples`]() folder of the repository. Here is a first basic one to get you started:
+We have several examples in the [`/examples`](https://github.com/vscav/react-twitch-provider/tree/main/examples) folder of the repository. Here is a first basic one to get you started:
 
 ```jsx
 import TwitchProvider, { useTwitchUser } from 'react-twitch-provider'
@@ -134,7 +134,7 @@ In a external React application that you've created, run
 
 It will copy the current version from the store to your dependent project's `.yalc` folder and inject a `file:.yalc/my-package dependency` into the `package.json`.
 
-> You can alternatively use one of the projects of the [`/examples`]() folder of the repository to use it as a template.
+> You can alternatively use one of the projects of the [`/examples`](https://github.com/vscav/react-twitch-provider/tree/main/examples) folder of the repository to use it as a template.
 
 ##### Update
 
