@@ -17,17 +17,33 @@
 
 ### Register the application
 
-Coming soon
+Follow the Twitch documentation to register an application.
+
+The goal is to obtain your client ID, which we’ll use to get your access token and to set the `Client-Id` header in all requests to the Twitch API.
 
 ### Environement file
 
-Coming soon
+Note that client IDs are considered public and can be embedded in a web page’s source. Although, it can be a good practice to store it in a environment file to not spread it.
+
+In your application, create a `.env` file with
+
+    touch .env
+
+> Do not forget to add this file to your `.gitignore` file
+
+In this file, create a key that will hold your client ID. For example:
+
+    REACT_APP_TWITCH_CLIENT_ID=YOUR-CLIENT-ID
 
 ### Add the package
 
-Coming soon
+Install the package with the package manager of your choice. With `yarn` you can do
 
-## Examples
+    yarn add react-twitch-provider
+
+## Usage
+
+### Examples
 
 We have several examples in the [`/examples` folder]() of the repository. Here is a first basic one to get you started:
 
@@ -57,9 +73,9 @@ export function App() {
 
 This example will render your Twitch username into a container on the page.
 
-> Make sure to follow the installation section to handle the client id and redirect URI from Twitch.
+> Make sure to follow the installation section to handle the client ID and redirect URI from Twitch.
 
-## API
+### API
 
 Coming soon
 
@@ -80,6 +96,10 @@ Build the package with
     yarn build
 
 It will build the package source twice, once for **ESM** and once for **CommonJS**.
+
+### Release
+
+Coming soon
 
 ### Tests
 
