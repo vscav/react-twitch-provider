@@ -1,15 +1,12 @@
-<br  />
-
-<p  align="center">
-
-<a  href="..."  target="_blank">
-
-<img  style="display: block; margin: auto; width: 200px;"  src="">
-</a>
+<p align="center">
+  <img src="logo.svg" width="140px" align="center" alt="React Twitch Provider logo" />
+  <h1 align="center">React Twitch Provider</h1>
+  <p align="center">
+    <br/>
+    React provider and hooks set to retrieve Twitch account and global data
+  </p>
 </p>
-
-<h3 align="center">React provider and hooks set to retrieve Twitch account and global information</h3>
-
+<br/>
 <p align="center">
 <a href="https://opensource.org/licenses"><img alt="GitHub" src="https://img.shields.io/github/license/vscav/react-twitch-provider"></a>
 </p>
@@ -122,7 +119,7 @@ In a external React application that you've created, run
 
 It will copy the current version from the store to your dependent project's `.yalc` folder and inject a `file:.yalc/my-package dependency` into the `package.json`.
 
-> You can alternatively use one of the projects of the [`/examples` folder]() of the repository) to use it as a template.
+> You can alternatively use one of the projects of the [`/examples` folder]() of the repository to use it as a template.
 
 ##### Update
 
