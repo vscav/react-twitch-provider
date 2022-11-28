@@ -3,7 +3,7 @@
   <h1 align="center">React Twitch Provider</h1>
   <p align="center">
     <br/>
-    React provider and hooks set to retrieve Twitch account and global data
+    React package that provides a hooks set to retrieve Twitch account and global data
   </p>
 </p>
 
@@ -43,7 +43,15 @@ Install the package with the package manager of your choice. With `yarn` you can
 
     yarn add react-twitch-provider
 
-## Usage
+## Documentation
+
+### API Reference
+
+**Coming soon**: Reference for each available hook can be found in the [`/docs`](https://github.com/vscav/react-twitch-provider/tree/main/docs) folder of the repository.
+
+- `useTwitchCheermotes`
+- `useTwitchTopGames`
+- `useTwitchUser`
 
 ### Examples
 
@@ -69,14 +77,6 @@ export function App() {
 This example will render your Twitch username into a container on the page.
 
 > Make sure to follow the [installation section](#register-the-application) to handle the client ID and OAuth redirect URI from Twitch.
-
-### API
-
-**Coming soon**: documentation for each available hook can be found in the [`/docs`](https://github.com/vscav/react-twitch-provider/tree/main/docs) folder.
-
-- `useTwitchCheermotes`
-- `useTwitchTopGames`
-- `useTwitchUser`
 
 ## Development
 
