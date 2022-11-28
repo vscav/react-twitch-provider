@@ -1,6 +1,6 @@
 {
   "name": "react-twitch-provider",
-  "version": "0.1.1-beta.0",
+  "version": "0.1.1-beta.1",
   "description": "A Twitch provider to easily access your Twitch account.",
   "main": "./build/cjs/index.js",
   "module": "./build/esm/index.js",
