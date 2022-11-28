@@ -98,7 +98,7 @@ It will build the package source twice, once for **ESM** and once for **CommonJS
 
 ### Release
 
-Coming soon
+We use [GitHub Actions](https://github.com/features/actions) to automate the release workflow of the package. See the [release file](https://github.com/vscav/react-twitch-provider/tree/main/RELEASE.md) of the repository to have more details about the release strategy and the process requirements.
 
 ### Tests
 
