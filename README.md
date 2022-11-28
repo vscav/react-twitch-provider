@@ -47,11 +47,11 @@ Install the package with the package manager of your choice. With `yarn` you can
 
 ### API Reference
 
-**Coming soon**: Reference for each available hook can be found in the [`/docs`](https://github.com/vscav/react-twitch-provider/tree/main/docs) folder of the repository.
+Documentation for each available hook can be found in the [`/docs`](https://github.com/vscav/react-twitch-provider/tree/main/docs) folder of the repository.
 
-- `useTwitchCheermotes`
-- `useTwitchCurrentUser`
-- `useTwitchTopGames`
+- [`useTwitchCheermotes`](https://github.com/vscav/react-twitch-provider/tree/main/docs/use-twitch-cheermotes.md)
+- [`useTwitchCurrentUser`](https://github.com/vscav/react-twitch-provider/tree/main/docs/use-twitch-current-user.md)
+- [`useTwitchTopGames`](https://github.com/vscav/react-twitch-provider/tree/main/docs/use-twitch-top-games.md)
 
 ### Examples
 
