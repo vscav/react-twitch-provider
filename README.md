@@ -24,7 +24,7 @@ Follow the Twitch documentation to [register an application](https://dev.twitch.
 
 The goal is to obtain your client ID, which we’ll use to get your OAuth access token and to set the `Client-Id` header in all requests to the Twitch API.
 
-### Environement file
+### Environment file
 
 Note that client IDs are considered public and can be embedded in a web page’s source. Although, it can be a good practice to store it in a environment file to not spread it.
 
