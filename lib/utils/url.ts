@@ -1,6 +1,12 @@
 import { isEmptyString, isString } from './string'
 
-function isUrl(value: unknown): value is string {
+/**
+ * Checks if a given value is a valid URL.
+ *
+ * @param {?} value A value to be checked.
+ * @returns {boolean} Whether the value is a valid URL.
+ */
+function isUrl(value: unknown): boolean {
   let res = false
 
   if (isString(value) && !isEmptyString(value)) {
