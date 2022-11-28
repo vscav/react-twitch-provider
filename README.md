@@ -11,6 +11,7 @@
 
 <p align="center">
   <a href="https://opensource.org/licenses"><img alt="GitHub" src="https://img.shields.io/github/license/vscav/react-twitch-provider"></a>
+  <a href="https://docs.npmjs.com/about-semantic-versioning"><img alt="npm" src="https://img.shields.io/npm/v/react-twitch-provider"></a>
 </p>
 
 <br />
