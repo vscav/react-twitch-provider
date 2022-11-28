@@ -7,8 +7,8 @@
 ### Download
 
 ```bash
-curl ...
-cd basic-example
+curl https://codeload.github.com/vscav/react-twitch-provider/tar.gz/main | tar -xz --strip=2 react-twitch-provider-main/examples/basic
+cd basic
 ```
 
 ### Configuration
@@ -32,6 +32,8 @@ yarn start
 npm install
 npm run start
 ```
+
+The application should be running on http://localhost:3000.
 
 ## The main idea behind this example
 
