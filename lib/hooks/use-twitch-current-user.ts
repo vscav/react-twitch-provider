@@ -10,7 +10,7 @@ import { useTwitchApi } from './use-twitch-api'
  *
  * @returns {TwitchUserHookReturn}
  */
-function useTwitchUser(): TwitchUserHookReturn {
+function useTwitchCurrentUser(): TwitchUserHookReturn {
   const { data, error, isValidating } = useTwitchApi<UsersApiResponse>(TWITCH_API_USERS_ENDPOINT)
 
   const needsDataValidation = data && !isValidating && !error
@@ -32,4 +32,4 @@ function useTwitchUser(): TwitchUserHookReturn {
   return { data: currentUser, error, isValidating, isLoading }
 }
 
-export { useTwitchUser }
+export { useTwitchCurrentUser }

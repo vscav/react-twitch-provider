@@ -1,4 +1,4 @@
-import TwitchProvider, { useTwitchCheermotes, useTwitchTopGames, useTwitchUser } from '../lib'
+import TwitchProvider, { useTwitchCheermotes, useTwitchCurrentUser, useTwitchTopGames } from '../lib'
 
 describe('Package exports', () => {
   it('should export the Twitch provider as a default export', () => {
@@ -9,11 +9,11 @@ describe('Package exports', () => {
     expect(useTwitchCheermotes).toBeDefined()
   })
 
-  it('should export the useTwitchTopGames hook as a named export', () => {
-    expect(useTwitchTopGames).toBeDefined()
+  it('should export the useTwitchCurrentUser hook as a named export', () => {
+    expect(useTwitchCurrentUser).toBeDefined()
   })
 
-  it('should export the useTwitchUser hook as a named export', () => {
-    expect(useTwitchUser).toBeDefined()
+  it('should export the useTwitchTopGames hook as a named export', () => {
+    expect(useTwitchTopGames).toBeDefined()
   })
 })

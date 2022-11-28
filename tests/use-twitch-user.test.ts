@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks'
 import mockConsole from 'jest-mock-console'
 import { ENTITY_IDENTIFIER } from '../lib/constants'
-import { useTwitchUser } from '../lib/hooks'
+import { useTwitchCurrentUser } from '../lib/hooks'
 import { getErrorMessage } from '../lib/utils'
 import { renderHookWithMockTwitchContext } from './utils'
 import {
@@ -13,10 +13,10 @@ import * as usersDb from './__mocks__/fixtures/data/users'
 import { USERS_PATH } from './__mocks__/paths'
 import { rest, server } from './__mocks__/server'
 
-describe('useTwitchUser', () => {
+describe('useTwitchCurrentUser', () => {
   it('should throw an error if used outside a Twitch provider', () => {
     const restoreConsole = mockConsole()
-    const { result } = renderHook(() => useTwitchUser())
+    const { result } = renderHook(() => useTwitchCurrentUser())
     expect(console.error).toHaveBeenCalled()
     expect(getErrorMessage(result.error)).toBe(
       'The TwitchProvider context is undefined. Verify that useTwitchContext() is being called as a child of a <TwitchProvider> component.',
@@ -25,7 +25,7 @@ describe('useTwitchUser', () => {
   })
 
   it('should return a 200 response with data', async () => {
-    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchUser())
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchCurrentUser())
 
     expect(result.current.isValidating).toBeTruthy()
     expect(result.current.isLoading).toBeTruthy()
@@ -41,7 +41,7 @@ describe('useTwitchUser', () => {
   })
 
   it('should return a 401 error on an invalid Twitch OAuth token', async () => {
-    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchUser(), {
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchCurrentUser(), {
       accessToken: TWITCH_INVALID_OAUTH_TOKEN,
     })
 
@@ -61,7 +61,7 @@ describe('useTwitchUser', () => {
   })
 
   it('should return a 401 error on an invalid Twitch client identifier', async () => {
-    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchUser(), {
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchCurrentUser(), {
       clientId: TWITCH_INVALID_CLIENT_ID,
     })
 
@@ -95,7 +95,7 @@ describe('useTwitchUser', () => {
       }),
     )
 
-    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchUser())
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchCurrentUser())
 
     expect(result.current.isValidating).toBeTruthy()
     expect(result.current.isLoading).toBeTruthy()
@@ -121,7 +121,7 @@ describe('useTwitchUser', () => {
       }),
     )
 
-    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchUser())
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchCurrentUser())
 
     expect(result.current.isValidating).toBeTruthy()
     expect(result.current.isLoading).toBeTruthy()

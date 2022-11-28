@@ -50,18 +50,18 @@ Install the package with the package manager of your choice. With `yarn` you can
 **Coming soon**: Reference for each available hook can be found in the [`/docs`](https://github.com/vscav/react-twitch-provider/tree/main/docs) folder of the repository.
 
 - `useTwitchCheermotes`
+- `useTwitchCurrentUser`
 - `useTwitchTopGames`
-- `useTwitchUser`
 
 ### Examples
 
 We have several examples in the [`/examples`](https://github.com/vscav/react-twitch-provider/tree/main/examples) folder of the repository. Here is a first basic one to get you started:
 
 ```jsx
-import TwitchProvider, { useTwitchUser } from 'react-twitch-provider'
+import TwitchProvider, { useTwitchCurrentUser } from 'react-twitch-provider'
 
 function Greeting() {
-  const { data } = useTwitchUser()
+  const { data } = useTwitchCurrentUser()
   return <div>{data && <>Welcome {data.display_name}</>}</div>
 }
 
