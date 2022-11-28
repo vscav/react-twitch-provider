@@ -7,9 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- `useTwitchCurrentUser` hook to retrieve current logged in user data.
-- `useTwitchTopGames` hook to retrieve top Twitch games data (support for pagination).
-- `useTwitchCheermotes` hook to retrieve available Twitch cheermotes (support for user's custom cheermotes).
+- Add build support for both ESM and CommonJS.
+- Create `useTwitchCurrentUser` hook to retrieve current logged in user data.
+- Create `useTwitchTopGames` hook to retrieve top Twitch games data (support for pagination).
+- Create `useTwitchCheermotes` hook to retrieve available Twitch cheermotes (support for user's custom cheermotes).
 
 ### Added
 
