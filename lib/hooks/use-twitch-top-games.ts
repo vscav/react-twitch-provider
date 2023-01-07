@@ -1,7 +1,7 @@
 import { ENTITY_IDENTIFIER, TWITCH_API_TOP_GAMES_ENDPOINT } from '../constants'
 import type { GamesApiResponse, Range, TwitchGamesHookReturn } from '../types'
 import {
-  createApiEndpoint,
+  buildApiEndpoint,
   safelyValidateGamesData,
   safelyValidatePagination,
   UnexpectedTwitchDataError,
@@ -36,7 +36,7 @@ interface TwitchTopGamesQueryParams {
  * @returns {TwitchCheermotesHookReturn}
  */
 function useTwitchTopGames(queryParameters?: TwitchTopGamesQueryParams): TwitchGamesHookReturn {
-  const path = createApiEndpoint(TWITCH_API_TOP_GAMES_ENDPOINT, {
+  const path = buildApiEndpoint(TWITCH_API_TOP_GAMES_ENDPOINT, {
     ...(queryParameters?.after && { after: queryParameters.after }),
     ...(queryParameters?.before && { before: queryParameters.before }),
     ...(queryParameters?.first && { first: queryParameters.first.toString() }),

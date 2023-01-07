@@ -1,6 +1,6 @@
 import { ENTITY_IDENTIFIER, TWITCH_API_CHEERMOTES_ENDPOINT } from '../constants'
 import type { CheermotesApiResponse, TwitchCheermotesHookReturn } from '../types'
-import { createApiEndpoint, safelyValidateCheermotesData, UnexpectedTwitchDataError } from '../utils'
+import { buildApiEndpoint, safelyValidateCheermotesData, UnexpectedTwitchDataError } from '../utils'
 import { useTwitchApi } from './use-twitch-api'
 
 /**
@@ -19,7 +19,7 @@ function useTwitchCheermotes(broadcasterId?: string): TwitchCheermotesHookReturn
   let path = null
 
   if (!isBroadcasterIdSpecified || isBroadcasterIdDefined) {
-    path = createApiEndpoint(TWITCH_API_CHEERMOTES_ENDPOINT, {
+    path = buildApiEndpoint(TWITCH_API_CHEERMOTES_ENDPOINT, {
       ...(isBroadcasterIdDefined && { broadcaster_id: broadcasterId }),
     })
   }

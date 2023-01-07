@@ -3,11 +3,11 @@ import {
   TWITCH_API_TOP_GAMES_ENDPOINT,
   TWITCH_API_USERS_ENDPOINT,
 } from '../../lib/constants'
-import { createApiUrl } from '../../lib/utils'
+import { buildApiUrl } from '../../lib/utils'
 
-const CHEERMOTES_PATH = createApiUrl(TWITCH_API_CHEERMOTES_ENDPOINT)
-const TOP_GAMES_PATH = createApiUrl(TWITCH_API_TOP_GAMES_ENDPOINT)
-const USERS_PATH = createApiUrl(TWITCH_API_USERS_ENDPOINT)
-const OTHER_PATH = createApiUrl('*')
+const CHEERMOTES_PATH = buildApiUrl(TWITCH_API_CHEERMOTES_ENDPOINT)
+const TOP_GAMES_PATH = buildApiUrl(TWITCH_API_TOP_GAMES_ENDPOINT)
+const USERS_PATH = buildApiUrl(TWITCH_API_USERS_ENDPOINT)
+const OTHER_PATH = buildApiUrl('*')
 
 export { CHEERMOTES_PATH, TOP_GAMES_PATH, USERS_PATH, OTHER_PATH }

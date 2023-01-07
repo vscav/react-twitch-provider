@@ -3,7 +3,7 @@ import useSWR from 'swr'
 import { REQUEST_INIT } from '../constants'
 import { useTwitchContext } from '../context'
 import type { nullableString, TwitchHookFetcherReturn } from '../types'
-import { createApiUrl, FetcherError, generateError } from '../utils'
+import { buildApiUrl, FetcherError, generateError } from '../utils'
 
 /**
  * Fetcher method used to perform `GET` requests on the Twitch API.
@@ -29,7 +29,7 @@ async function twitchApiFetcher<FetcherResponse>(url: string, headers: HeadersIn
 function useTwitchApi<EntityDataType>(endpoint: nullableString): TwitchHookFetcherReturn<EntityDataType> {
   const { accessToken, clientId } = useTwitchContext()
 
-  const url = createApiUrl(endpoint)
+  const url = buildApiUrl(endpoint)
   const headers = {
     'client-id': clientId,
     authorization: `Bearer ${accessToken}`,
