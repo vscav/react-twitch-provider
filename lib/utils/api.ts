@@ -15,7 +15,7 @@ function buildApiUrl(endpoint: nullableString): string {
 /**
  * Adds query parameters to a given endpoint.
  *
- * @param {?string} endpoint The Twitch API endpoint to access
+ * @param {string} endpoint The Twitch API endpoint to access
  * @param {Object.<string, string | string[]>} [queryParams={}] The query parameters to add to the endpoint
  * @returns {string} The endpoint with its query parameters
  * @example

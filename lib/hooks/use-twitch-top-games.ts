@@ -29,7 +29,7 @@ interface TwitchTopGamesQueryParams {
 }
 
 /**
- * Gets games sorted by number of current viewers on Twitch, most popular first.
+ * Retrieves games sorted by number of current viewers on Twitch, most popular first.
  *
  * See the [Twitch API endpoint documentation](https://dev.twitch.tv/docs/api/reference#get-top-games) for more information.
  *

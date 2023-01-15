@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks'
 import mockConsole from 'jest-mock-console'
 import { ENTITY_IDENTIFIER } from '../lib/constants'
-import { useTwitchCheermotes } from '../lib/hooks'
+import { useTwitchChannelsInfo } from '../lib/hooks'
 import { getErrorMessage } from '../lib/utils'
 import { renderHookWithMockTwitchContext } from './utils'
 import {
@@ -9,14 +9,14 @@ import {
   TWITCH_INVALID_CLIENT_ID,
   TWITCH_INVALID_OAUTH_TOKEN,
 } from './__mocks__/fixtures'
-import * as cheermotesDb from './__mocks__/fixtures/data/cheermotes'
-import { CHEERMOTES_PATH } from './__mocks__/paths'
+import * as channelsDb from './__mocks__/fixtures/data/channels'
+import { CHANNELS_PATH } from './__mocks__/paths'
 import { rest, server } from './__mocks__/server'
 
-describe('useTwitchCheermotes', () => {
+describe('useTwitchChannelsInfo', () => {
   it('should throw an error if used outside a Twitch provider', () => {
     const restoreConsole = mockConsole()
-    const { result } = renderHook(() => useTwitchCheermotes())
+    const { result } = renderHook(() => useTwitchChannelsInfo('141981764'))
     expect(console.error).toHaveBeenCalled()
     expect(getErrorMessage(result.error)).toBe(
       'The TwitchProvider context is undefined. Verify that useTwitchContext() is being called as a child of a <TwitchProvider> component.',
@@ -24,73 +24,76 @@ describe('useTwitchCheermotes', () => {
     restoreConsole()
   })
 
-  it('should return a 200 response with data', async () => {
-    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchCheermotes())
+  describe('if one channel is specified', () => {
+    it('should return a 200 response with data', async () => {
+      const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchChannelsInfo('141981764'))
 
-    expect(result.current.isValidating).toBeTruthy()
-    expect(result.current.isLoading).toBeTruthy()
-    expect(result.current.error).toBeUndefined()
-    expect(result.current.data).toBeUndefined()
+      expect(result.current.isValidating).toBeTruthy()
+      expect(result.current.isLoading).toBeTruthy()
+      expect(result.current.error).toBeUndefined()
+      expect(result.current.data).toBeUndefined()
 
-    await waitForNextUpdate()
+      await waitForNextUpdate()
 
-    expect(result.current.isValidating).toBeFalsy()
-    expect(result.current.isLoading).toBeFalsy()
-    expect(result.current.error).toBeUndefined()
-    expect(result.current.data).toBeDefined()
+      expect(result.current.isValidating).toBeFalsy()
+      expect(result.current.isLoading).toBeFalsy()
+      expect(result.current.error).toBeUndefined()
+      expect(result.current.data).toBeDefined()
+
+      expect(result.current.data!.length).toEqual(1)
+    })
   })
 
-  it('should return a 200 response with data when passing a broadcaster identifier', async () => {
-    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchCheermotes('123456789'))
+  describe('if multiple channels are specified', () => {
+    it('should return a 200 response with data', async () => {
+      const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() =>
+        useTwitchChannelsInfo(['141981764', '141929002']),
+      )
 
-    expect(result.current.isValidating).toBeTruthy()
-    expect(result.current.isLoading).toBeTruthy()
-    expect(result.current.error).toBeUndefined()
-    expect(result.current.data).toBeUndefined()
+      expect(result.current.isValidating).toBeTruthy()
+      expect(result.current.isLoading).toBeTruthy()
+      expect(result.current.error).toBeUndefined()
+      expect(result.current.data).toBeUndefined()
 
-    await waitForNextUpdate()
+      await waitForNextUpdate()
 
-    expect(result.current.isValidating).toBeFalsy()
-    expect(result.current.isLoading).toBeFalsy()
-    expect(result.current.error).toBeUndefined()
-    expect(result.current.data).toBeDefined()
+      expect(result.current.isValidating).toBeFalsy()
+      expect(result.current.isLoading).toBeFalsy()
+      expect(result.current.error).toBeUndefined()
+      expect(result.current.data).toBeDefined()
+
+      expect(result.current.data!.length).toEqual(2)
+    })
+  })
+
+  describe('if the specified channels can not be found', () => {
+    it('should return a 200 response with an empty list', async () => {
+      const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() =>
+        useTwitchChannelsInfo('id_of_non_existent_channel'),
+      )
+
+      expect(result.current.isValidating).toBeTruthy()
+      expect(result.current.isLoading).toBeTruthy()
+      expect(result.current.error).toBeUndefined()
+      expect(result.current.data).toBeUndefined()
+
+      await waitForNextUpdate()
+
+      expect(result.current.isValidating).toBeFalsy()
+      expect(result.current.isLoading).toBeFalsy()
+      expect(result.current.error).toBeUndefined()
+      expect(result.current.data).toEqual(expect.arrayContaining([]))
+    })
   })
 
   it('should be in idle state when passing an undefined broadcaster identifier', async () => {
-    const { result } = renderHookWithMockTwitchContext(() => useTwitchCheermotes(undefined))
+    const { result } = renderHookWithMockTwitchContext(() => useTwitchChannelsInfo(undefined))
 
     expect(result.current.isValidating).toBeFalsy()
-  })
-
-  it('should return a 200 response even if the received data is an empty Cheermotes array', async () => {
-    server.use(
-      rest.get(CHEERMOTES_PATH, (_, response, context) => {
-        return response(
-          context.status(200),
-          context.json({
-            data: [],
-          }),
-        )
-      }),
-    )
-
-    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchCheermotes())
-
-    expect(result.current.isValidating).toBeTruthy()
-    expect(result.current.isLoading).toBeTruthy()
-    expect(result.current.error).toBeUndefined()
-    expect(result.current.data).toBeUndefined()
-
-    await waitForNextUpdate()
-
-    expect(result.current.isValidating).toBeFalsy()
-    expect(result.current.isLoading).toBeFalsy()
-    expect(result.current.error).toBeUndefined()
-    expect(result.current.data).toEqual(expect.arrayContaining([]))
   })
 
   it('should return a 401 error on an invalid Twitch OAuth token', async () => {
-    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchCheermotes(), {
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchChannelsInfo('141981764'), {
       accessToken: TWITCH_INVALID_OAUTH_TOKEN,
     })
 
@@ -110,7 +113,7 @@ describe('useTwitchCheermotes', () => {
   })
 
   it('should return a 401 error on an invalid Twitch client identifier', async () => {
-    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchCheermotes(), {
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchChannelsInfo('141981764'), {
       clientId: TWITCH_INVALID_CLIENT_ID,
     })
 
@@ -131,20 +134,20 @@ describe('useTwitchCheermotes', () => {
 
   it('should return a 422 error on unexpected/malformed Cheermotes data received from the Twitch API', async () => {
     server.use(
-      rest.get(CHEERMOTES_PATH, (_, response, context) => {
-        const cheermotes = cheermotesDb.getAll()
-        const malformedCheermotes = cheermotes.map((cheermote) => ({ ...cheermote, created_at: 'Unexpected property' }))
+      rest.get(CHANNELS_PATH, (_, response, context) => {
+        const channels = channelsDb.getAll()
+        const malformedChannels = channels.map((cheermote) => ({ ...cheermote, created_at: 'Unexpected property' }))
 
         return response(
           context.status(200),
           context.json({
-            data: malformedCheermotes,
+            data: malformedChannels,
           }),
         )
       }),
     )
 
-    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchCheermotes())
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchChannelsInfo('141981764'))
 
     expect(result.current.isValidating).toBeTruthy()
     expect(result.current.isLoading).toBeTruthy()
@@ -159,18 +162,18 @@ describe('useTwitchCheermotes', () => {
     expect(result.current.error?.status).toBe(422)
     expect(result.current.error?.name).toBe('Unexpected Twitch data format')
     expect(result.current.error?.message).toBe(
-      `The response received from the Twitch API does not respect the expected format for the ${ENTITY_IDENTIFIER.CHEERMOTE} object. It might has been caused by breaking changes in the Twitch API that are not currently handled in the library.`,
+      `The response received from the Twitch API does not respect the expected format for the ${ENTITY_IDENTIFIER.CHANNEL} object. It might has been caused by breaking changes in the Twitch API that are not currently handled in the library.`,
     )
   })
 
   it('should return a 500 error on an internal server error', async () => {
     server.use(
-      rest.get(CHEERMOTES_PATH, (_, response, context) => {
+      rest.get(CHANNELS_PATH, (_, response, context) => {
         return response(context.status(500), context.json(TWITCH_INTERNAL_SERVER_ERROR_RESPONSE))
       }),
     )
 
-    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchCheermotes())
+    const { result, waitForNextUpdate } = renderHookWithMockTwitchContext(() => useTwitchChannelsInfo('141981764'))
 
     expect(result.current.isValidating).toBeTruthy()
     expect(result.current.isLoading).toBeTruthy()

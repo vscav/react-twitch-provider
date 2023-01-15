@@ -1,10 +1,26 @@
 import { rest } from 'msw'
+import * as channelsDb from './fixtures/data/channels'
 import * as cheermotesDb from './fixtures/data/cheermotes'
 import * as gamesDB from './fixtures/data/games'
 import * as usersDB from './fixtures/data/users'
 import { isAccessTokenValid, isClientIdValid } from './guards'
-import { CHEERMOTES_PATH, OTHER_PATH, TOP_GAMES_PATH, USERS_PATH } from './paths'
+import { CHANNELS_PATH, CHEERMOTES_PATH, OTHER_PATH, TOP_GAMES_PATH, USERS_PATH } from './paths'
 import { wrongAccessToken, wrongClientId } from './responses'
+
+const getChannelsHandler = rest.get(CHANNELS_PATH, (request, response, context) => {
+  if (!isAccessTokenValid(request.headers.get('authorization'))) return wrongAccessToken(response, context)
+  if (!isClientIdValid(request.headers.get('client-id'))) return wrongClientId(response, context)
+
+  const broadcasterIds = request.url.searchParams.getAll('broadcaster_id')
+  const channels = channelsDb.getByBroadcasterId(broadcasterIds)
+
+  return response(
+    context.status(200),
+    context.json({
+      data: channels,
+    }),
+  )
+})
 
 const getCheermotesHandler = rest.get(CHEERMOTES_PATH, (request, response, context) => {
   if (!isAccessTokenValid(request.headers.get('authorization'))) return wrongAccessToken(response, context)
@@ -58,6 +74,6 @@ const unknownEndpointHandler = rest.get(OTHER_PATH, (_, response, context) => {
   return response(context.status(404))
 })
 
-const handlers = [getCheermotesHandler, getTopGamesHandler, getUsersHandler, unknownEndpointHandler]
+const handlers = [getChannelsHandler, getCheermotesHandler, getTopGamesHandler, getUsersHandler, unknownEndpointHandler]
 
 export { handlers }

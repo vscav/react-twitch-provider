@@ -1,5 +1,16 @@
-import { Cheermotes, Games, TwitchApiError, User } from '../types'
+import { Channels, Cheermotes, Games, TwitchApiError, User } from '../types'
 import { Pagination } from '../types/pagination'
+
+/**
+ * Checks (safely, without throwing) if a given value respects the format of a Twitch channel entities array.
+ *
+ * @param {?} maybeChannelsData The value to be checked.
+ * @returns {boolean} Whether the value is a valid Twitch channel entities array.
+ */
+function safelyValidateChannelsData(maybeChannelsData: unknown): boolean {
+  const { success: areChannelsDataValid } = Channels.safeParse(maybeChannelsData)
+  return areChannelsDataValid
+}
 
 /**
  * Checks (safely, without throwing) if a given value respects the format of a Twitch cheermote entities array.
@@ -57,6 +68,7 @@ function safelyValidateUserData(maybeUserData: unknown): boolean {
 }
 
 export {
+  safelyValidateChannelsData,
   safelyValidateCheermotesData,
   safelyValidateGamesData,
   safelyValidatePagination,

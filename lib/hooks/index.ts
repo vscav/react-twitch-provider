@@ -1,4 +1,5 @@
 export { useTwitchApi } from './use-twitch-api'
+export { useTwitchChannelsInfo } from './use-twitch-channels-info'
 export { useTwitchCheermotes } from './use-twitch-cheermotes'
 export { useTwitchCurrentUser } from './use-twitch-current-user'
 export { useTwitchTopGames } from './use-twitch-top-games'
